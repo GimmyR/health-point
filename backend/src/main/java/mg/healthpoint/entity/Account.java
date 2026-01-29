@@ -1,17 +1,11 @@
 package mg.healthpoint.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
+import java.time.LocalDate;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,8 +25,16 @@ public class Account {
 	
 	private String password;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinTable
-	private List<Role> roles = new ArrayList<Role>();
+	private String firstname;
+	
+	private String lastname;
+	
+	private String gender;
+	
+	private LocalDate dateOfBirth;
+	
+	private String address;
+	
+	private String contact;
 
 }
