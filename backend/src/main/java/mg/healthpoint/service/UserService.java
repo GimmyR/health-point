@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Account account = accountRepository.findOneByUsernameWithRoles(username);
+		Account account = accountRepository.findByUsername(username);
 		
 		if(account == null)
 			throw new UsernameNotFoundException(String.format("%s not found", username));
