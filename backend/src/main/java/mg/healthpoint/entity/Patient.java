@@ -37,8 +37,5 @@ public class Patient {
 	
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Parameter> parameters = new ArrayList<Parameter>();
-	
-	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	private List<ParameterEntry> entries = new ArrayList<ParameterEntry>();
 
 }
