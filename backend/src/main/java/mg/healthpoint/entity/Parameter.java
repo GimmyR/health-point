@@ -38,6 +38,6 @@ public class Parameter {
 	private String unit;
 	
 	@OneToMany(mappedBy = "parameter", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<EntryDetail> details = new ArrayList<EntryDetail>();
+	private List<ParameterEntry> details = new ArrayList<ParameterEntry>();
 
 }
