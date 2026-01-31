@@ -11,7 +11,7 @@ export default function Root() {
 
         if(!jwtoken)
             navigate("/sign-in");
-    });
+    }, []);
 
     return <>
         {!isSignIn && <header>
