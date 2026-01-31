@@ -3,6 +3,9 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './components/Root.tsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.min.css';
+import './main.css';
+import SignIn from './components/SignIn.tsx';
 
 const router = createBrowserRouter([
     {
@@ -12,7 +15,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "sign-in",
-                element: <div>Sign In page</div>
+                element: <SignIn/>
             }
         ]
     }
