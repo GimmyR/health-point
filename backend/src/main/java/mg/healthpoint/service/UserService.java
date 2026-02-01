@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
 		
 		UserDetails user = User.withUsername(account.getUsername())
 								.password(account.getPassword())
-								.roles((String[]) roles.toArray())
+								.roles(roles.toArray(String[]::new))
 								.build();
 		
 		return user;
