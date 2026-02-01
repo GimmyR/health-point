@@ -52,8 +52,9 @@ public class SecurityConfig {
 				.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
     			.csrf(csrf -> csrf.disable())
     			.cors(Customizer.withDefaults())
-    			.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-				.userDetailsService(userService)
+    			.authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/sign-in").permitAll()
+    														.anyRequest().authenticated()
+    			).userDetailsService(userService)
 				.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
         return httpSecurity.build();
