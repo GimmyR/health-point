@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function SignIn() {
     const [error, setError] = useState<string | undefined>();
     const navigate = useNavigate();
+    const backend = import.meta.env.VITE_BACKEND_URL;
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -14,7 +15,7 @@ export default function SignIn() {
             password: formData.get("password") as string
         };
 
-        const response = await fetch("http://localhost:8080/api/sign-in", {
+        const response = await fetch(`${backend}/api/sign-in`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
