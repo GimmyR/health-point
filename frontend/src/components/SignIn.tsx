@@ -35,7 +35,7 @@ export default function SignIn() {
     };
 
     return (
-        <main id="sign-in" className="container-fluid px-0">
+        <main className="container-fluid px-0">
             <div className="d-flex flex-row justify-content-center justify-content-lg-end">
                 <div className="col-12 col-lg-5 col-xl-4 col-xxl-3 min-vh-100 d-flex flex-row justify-content-center align-items-center align-items-lg-start bg-light pt-lg-5 px-lg-5">
                     <form className="col-8 col-sm-7 col-md-5 col-lg-12" onSubmit={handleSubmit}>
