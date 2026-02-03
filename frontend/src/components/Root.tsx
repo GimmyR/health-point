@@ -1,5 +1,6 @@
 import { Outlet, useMatch } from "react-router-dom";
 import Header from "./Header";
+import Home from "./Home";
 
 export default function Root() {
     const isIndex = useMatch("/");
@@ -8,7 +9,7 @@ export default function Root() {
     return <>
         {!isSignIn && <Header/>}
         <div>
-            {isIndex && <h1>Welcome !</h1>}
+            {isIndex && <Home/>}
             <Outlet/>
         </div>
     </>
