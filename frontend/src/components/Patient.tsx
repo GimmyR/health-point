@@ -1,5 +1,6 @@
 import AccountInfo from "./AccountInfo";
 import HPChart from "./HPChart";
+import ParametersTable from "./ParametersTable";
 import PatientInfo from "./PatientInfo";
 
 export default function Patient() {
@@ -60,11 +61,18 @@ export default function Patient() {
                     }
                 ]
             }
+        ],
+
+        dateTimes: [
+            "2026-01-01 06:00:00",
+            "2026-01-01 18:00:00",
+            "2026-01-02 06:00:00",
+            "2026-01-02 18:00:00"
         ]
     };
 
     return <main className="container-fluid container-lg min-vh-100 px-4 pt-5 bg-light">
-        <div className="pt-4">
+        <div className="pt-4 pb-3">
             <div className="d-flex flex-column flex-lg-row">
                 <div className="col-12 col-lg-6">
                     <AccountInfo account={patient.account}/>
@@ -73,11 +81,11 @@ export default function Patient() {
                     <PatientInfo patient={patient.details}/>
                 </div>
             </div>
-            <div className="d-flex flex-column">
+            <div className="d-flex flex-column mb-5">
                 {patient.parameters.map(param => <HPChart key={param.id} parameter={param}/>)}
             </div>
             <div className="d-flex flex-column">
-                Tables
+                <ParametersTable dateTimes={patient.dateTimes} parameters={patient.parameters}/>
             </div>
         </div>
     </main>
