@@ -20,6 +20,23 @@ export default function Patient() {
         parameters: [
             {
                 id: 1,
+                name: "Weight",
+                unit: "Kg",
+                min: 0,
+                max: 200,
+                entries: [
+                    {
+                        dateTime: "2026-01-01 06:00:00",
+                        value: 102
+                    },
+                    {
+                        dateTime: "2026-01-02 06:00:00",
+                        value: 90
+                    }
+                ]
+            },
+            {
+                id: 2,
                 name: "Temperature",
                 unit: "*C",
                 min: 35,
