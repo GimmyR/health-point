@@ -37,10 +37,6 @@ export default function LineChart({ parameter } : { parameter: Parameter }) {
                         return [date, time];
                     }
                 } 
-            },
-            y: {
-                min: 35,
-                max: 40
             }
         }
     };
