@@ -36,7 +36,7 @@ public class ParameterEntryServiceUnitTest {
 		
 		Account account = new Account(1, "johndoe", "pwdJohn", "John", "Doe", "Male", LocalDate.now(), "Itaosy", "033 72 209 28");
 		Patient patient = new Patient(1, account, "Room 67", "Mental illness", new ArrayList<Parameter>());
-		Parameter parameter = new Parameter(1, patient, "Temperature", "*C", new ArrayList<>());
+		Parameter parameter = new Parameter(1, patient, "Temperature", "*C", 35.0, 42.0, new ArrayList<>());
 		ParameterEntry entry = new ParameterEntry(1, parameter, LocalDateTime.now(), 36.5);
 		when(parameterEntryRepository.findById(1)).thenReturn(Optional.of(entry));
 		

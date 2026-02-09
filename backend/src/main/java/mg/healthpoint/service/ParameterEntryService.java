@@ -1,5 +1,6 @@
 package mg.healthpoint.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,12 @@ public class ParameterEntryService {
 			return opt.get();
 		
 		else throw new NotFoundException("Parameter Entry not found");
+		
+	}
+	
+	public List<LocalDateTime> findDistinctEntryDatesByPatientId(Integer id) {
+		
+		return parameterEntryRepository.findDistinctEntryDatesByPatientId(id);
 		
 	}
 	
