@@ -13,7 +13,7 @@ ChartJS.register(
 
 export default function LineChart({ parameter } : { parameter: Parameter }) {
     const data = {
-        labels: parameter.entries.map(entry => entry.dateTime),
+        labels: parameter.entries.map(entry => entry.entryDate),
         datasets: [{
             label: parameter.name,
             data: parameter.entries.map(entry => entry.value),
@@ -32,7 +32,7 @@ export default function LineChart({ parameter } : { parameter: Parameter }) {
                     maxRotation: 45,
                     minRotation: 45,
                     callback: (value) => {
-                        const label = parameter.entries[value as number].dateTime;
+                        const label = new Date(parameter.entries[value as number].entryDate).toLocaleString();
                         const [date, time] = label.split(" ");
                         return [date, time];
                     }

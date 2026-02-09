@@ -1,78 +1,33 @@
+import { useEffect, useState } from "react";
 import AccountInfo from "./AccountInfo";
 import HPChart from "./HPChart";
 import ParametersTable from "./ParametersTable";
 import PatientInfo from "./PatientInfo";
+import type IPatient from "../interfaces/IPatient";
+import { BACKEND } from "../lib/url";
 
 export default function Patient() {
-    const patient = {
-        account: {
-            firstname: "John",
-            lastname: "Doe",
-            gender: "Male",
-            dateOfBirth: "1996-11-11",
-            address: "Itaosy"
-        },
+    const [patient, setPatient] = useState<IPatient | undefined>();
 
-        details: {
-            room: "Room 216",
-            diagnosis: "Mental illness"
-        },
+    const fetchPatient = async () => {
+        const response = await fetch(`${BACKEND}/api/patient`, { 
+            headers: { 
+                "Authorization": `Bearer ${localStorage.getItem("jwtoken")}` 
+            } 
+        });
 
-        parameters: [
-            {
-                id: 1,
-                name: "Weight",
-                unit: "Kg",
-                min: 0,
-                max: 200,
-                entries: [
-                    {
-                        dateTime: "2026-01-01 06:00:00",
-                        value: 102
-                    },
-                    {
-                        dateTime: "2026-01-02 06:00:00",
-                        value: 90
-                    }
-                ]
-            },
-            {
-                id: 2,
-                name: "Temperature",
-                unit: "*C",
-                min: 35,
-                max: 40,
-                entries: [
-                    {
-                        dateTime: "2026-01-01 06:00:00",
-                        value: 36.5
-                    },
-                    {
-                        dateTime: "2026-01-01 18:00:00",
-                        value: 35.7
-                    },
-                    {
-                        dateTime: "2026-01-02 06:00:00",
-                        value: 35.5
-                    },
-                    {
-                        dateTime: "2026-01-02 18:00:00",
-                        value: 36.2
-                    }
-                ]
-            }
-        ],
+        if(response.status == 200)
+            setPatient(await response.json());
 
-        dateTimes: [
-            "2026-01-01 06:00:00",
-            "2026-01-01 18:00:00",
-            "2026-01-02 06:00:00",
-            "2026-01-02 18:00:00"
-        ]
+        else console.log(await response.text());
     };
 
+    useEffect(() => {
+        fetchPatient();
+    }, []);
+
     return <main className="container-fluid container-lg min-vh-100 px-4 pt-5 bg-light">
-        <div className="pt-4 pb-3">
+        {patient && <div className="pt-4 pb-3">
             <div className="d-flex flex-column flex-lg-row">
                 <div className="col-12 col-lg-6">
                     <AccountInfo account={patient.account}/>
@@ -85,8 +40,8 @@ export default function Patient() {
                 {patient.parameters.map(param => <HPChart key={param.id} parameter={param}/>)}
             </div>
             <div className="d-flex flex-column">
-                <ParametersTable dateTimes={patient.dateTimes} parameters={patient.parameters}/>
+                <ParametersTable dateTimes={patient.entryDates} parameters={patient.parameters}/>
             </div>
-        </div>
+        </div>}
     </main>
 }

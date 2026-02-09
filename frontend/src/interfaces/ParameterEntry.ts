@@ -1,4 +1,5 @@
 export default interface ParameterEntry {
-    dateTime: string,
+    id: number,
+    entryDate: string,
     value: number
 }

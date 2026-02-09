@@ -10,8 +10,8 @@ export default function ParametersTable({ dateTimes, parameters } : { dateTimes:
         </thead>
         <tbody>
             {dateTimes.map(dt => <tr key={dt}>
-                <td>{dt}</td>
-                {parameters.map(param => <td key={`${dt} ${param.id}`}>{param.entries.find(entry => entry.dateTime == dt)?.value}</td>)}
+                <td>{new Date(dt).toLocaleString()}</td>
+                {parameters.map(param => <td key={`${dt} ${param.id}`}>{param.entries.find(entry => entry.entryDate == dt)?.value}</td>)}
             </tr>)}
         </tbody>
     </table>
