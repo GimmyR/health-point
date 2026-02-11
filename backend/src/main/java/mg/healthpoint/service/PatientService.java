@@ -52,25 +52,16 @@ public class PatientService {
 		
 		Patient result = opt.get();
 		
-		System.out.println("DEBUG 1");
-		
 		result.getParameters().forEach(param -> {
 			
-			System.out.println("DEBUG sub 1");
 			Optional<Parameter> optParam = parameterRepository.findWithEntriesById(param.getId());
-			System.out.println("DEBUG sub 2");
 			
 			if(optParam.isEmpty())
 				System.out.println(String.format("Parameter (ID: %d) not found", param.getId()));
 			
 			else param.editDetails(optParam.get().getDetails());
 			
-			System.out.println("DEBUG sub 3");
-		});
-		
-		System.out.println("DEBUG 2");
-		
-		return result;
+		}); return result;
 		
 	}
 	
