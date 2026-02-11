@@ -37,5 +37,13 @@ public class Patient {
 	
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Parameter> parameters = new ArrayList<Parameter>();
+	
+	// METHODS :
+	
+	public void editParameters(List<Parameter> parameters) {
+		
+		this.parameters = parameters;
+		
+	}
 
 }
