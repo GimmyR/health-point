@@ -37,7 +37,19 @@ public class Parameter {
 	
 	private String unit;
 	
+	private Double min;
+	
+	private Double max;
+	
 	@OneToMany(mappedBy = "parameter", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ParameterEntry> details = new ArrayList<ParameterEntry>();
+	
+	// METHODS :
+	
+	public void editDetails(List<ParameterEntry> details) {
+		
+		this.details = details;
+		
+	}
 
 }

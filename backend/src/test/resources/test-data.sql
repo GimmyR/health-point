@@ -6,3 +6,11 @@ VALUES (1, 'johndoe', '$2a$12$D6p06eCp9NHh2WvwFCuhM.o8.8f0R4xfD03dbD1jN.CbNQ6rnb
 /*  PATIENT */
 
 INSERT INTO Patient (id, account_id, room, diagnosis) VALUES (1, 1, '26C', 'Nephrotic syndrome');
+
+/* PARAMETER */
+
+INSERT INTO Parameter (id, patient_id, name, unit) VALUES (1, 1, 'Weight', 'kg');
+
+/* PARAMETER ENTRY */
+
+INSERT INTO Parameter_Entry (id, parameter_id, entry_date, value) VALUES (nextval('parameter_entry_seq'), 1, '2026-01-01 06:00:00', 100);

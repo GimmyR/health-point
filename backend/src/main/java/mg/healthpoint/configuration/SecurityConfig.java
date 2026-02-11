@@ -53,6 +53,7 @@ public class SecurityConfig {
     			.csrf(csrf -> csrf.disable())
     			.cors(Customizer.withDefaults())
     			.authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/sign-in").permitAll()
+    														.requestMatchers("/api/patient").authenticated()
     														.anyRequest().authenticated()
     			).userDetailsService(userService)
 				.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));

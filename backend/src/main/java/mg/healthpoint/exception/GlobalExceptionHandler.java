@@ -10,6 +10,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity<String> handleNotFoundException(NotFoundException e) {
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		
+	}
+	
 	@ExceptionHandler(AuthenticationException.class)
 	public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
 		

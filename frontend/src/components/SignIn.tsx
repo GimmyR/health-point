@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import InputGroup from "./InputGroup";
 import { useNavigate } from "react-router-dom";
+import { BACKEND } from "../lib/url";
 
 export default function SignIn() {
     const [error, setError] = useState<string | undefined>();
@@ -14,7 +15,7 @@ export default function SignIn() {
             password: formData.get("password") as string
         };
 
-        const response = await fetch("http://localhost:8080/api/sign-in", {
+        const response = await fetch(`${BACKEND}/api/sign-in`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

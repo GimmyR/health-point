@@ -1,6 +1,8 @@
 package mg.healthpoint.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +24,13 @@ public class AccountRestController {
 		accountService.authenticate(form);
 		String token = accountService.generateJWT(form.username());
 		return ResponseEntity.ok(token);
+		
+	}
+	
+	@GetMapping("/api/signed-in")
+	public ResponseEntity<String> signedIn(Authentication auth) {
+		
+		return ResponseEntity.ok(auth.getName());
 		
 	}
 
