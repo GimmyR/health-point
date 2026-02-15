@@ -69,7 +69,7 @@ public class SecurityConfig {
 				.formLogin(login -> login.loginPage("/sign-in").defaultSuccessUrl("/").permitAll())
 				.logout(logout -> logout.logoutSuccessUrl("/sign-in?logout").permitAll())
 				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/webjars/**", "/css/**", "/images/**").permitAll()
+						.requestMatchers("/actuator/**", "/webjars/**", "/css/**", "/images/**").permitAll()
 						.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/docs/**").permitAll()
 						.requestMatchers("/**").hasRole("Staff"))
 				.userDetailsService(userService);
