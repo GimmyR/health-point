@@ -2,7 +2,7 @@
 
 [![Health Point](https://github.com/GimmyR/health-point/actions/workflows/ci.yaml/badge.svg)](https://github.com/GimmyR/health-point/actions/workflows/ci.yaml)
 
-Bread on Board is a web application that lets users create, manage, and explore cooking recipes.
+Health Point is a web application that lets a doctor/nurse to save patient's data in relation to some parameters and to visualize changes in these parameters.
 
 It is built with:
 
