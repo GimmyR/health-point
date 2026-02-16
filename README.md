@@ -25,6 +25,7 @@ Before building or running the application, make sure you have the following ins
 DB_USERNAME=your_db_username
 DB_PASSWORD=your_db_password
 DB_name=your_database_name
+DB_URL=jdbc:postgresql://localhost:5432/${DB_NAME}
 
 # Password hashing strength (bcrypt cost)
 PASSWORD_STRENGTH=12
@@ -34,7 +35,7 @@ JWT_SECRET=your_very_long_random_secret_key_here_at_least_64_bytes
 
 # Frontend / CORS / API URLs
 FRONTEND_URL=http://localhost:5173
-NEXT_PUBLIC_CLIENT_SIDE_TO_API=http://localhost:8080
+VITE_BACKEND_URL=http://localhost:8080
 ```
 
 If you want to use a `.env` file, place it in the project's root directory.
