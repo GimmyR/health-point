@@ -25,7 +25,6 @@ Before building or running the application, make sure you have the following ins
 DB_USERNAME=your_db_username
 DB_PASSWORD=your_db_password
 DB_name=your_database_name
-DB_URL=jdbc:postgresql://localhost:5432/${DB_NAME}
 
 # Password hashing strength (bcrypt cost)
 PASSWORD_STRENGTH=12
