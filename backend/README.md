@@ -54,4 +54,4 @@ To run the application, execute the following command :
 java -jar target/*.jar
 ```
 
-The API documentation is available at http://localhost:8080/docs. (WITH SWAGGER LATER)
+The API documentation is available at http://localhost:8080/docs .
