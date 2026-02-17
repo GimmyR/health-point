@@ -49,7 +49,7 @@ docker compose --profile prod up --build
 
 You can access the frontend application in your browser at http://localhost:5173 .
 
-The API documentation is available at http://localhost:8080/docs . (WITH SWAGGER LATER)
+The API documentation is available at http://localhost:8080/docs .
 
 ## License
 
