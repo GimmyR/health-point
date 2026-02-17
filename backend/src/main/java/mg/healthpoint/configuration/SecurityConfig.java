@@ -66,8 +66,6 @@ public class SecurityConfig {
     SecurityFilterChain webSecurity(HttpSecurity httpSecurity) throws Exception {
 
 		httpSecurity
-				.formLogin(login -> login.loginPage("/sign-in").defaultSuccessUrl("/").permitAll())
-				.logout(logout -> logout.logoutSuccessUrl("/sign-in?logout").permitAll())
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers("/actuator/**", "/webjars/**", "/css/**", "/images/**").permitAll()
 						.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/docs/**").permitAll()
@@ -97,7 +95,8 @@ public class SecurityConfig {
 	@Bean
 	AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
 		
-		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(userDetailsService);
+		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+		daoAuthenticationProvider.setUserDetailsService(userDetailsService);
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
 		return new ProviderManager(daoAuthenticationProvider);
 		

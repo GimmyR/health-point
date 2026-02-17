@@ -5,8 +5,9 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import lombok.AllArgsConstructor;
 import mg.healthpoint.dto.PatientResponse;
 import mg.healthpoint.entity.Patient;
@@ -14,7 +15,7 @@ import mg.healthpoint.exception.NotFoundException;
 import mg.healthpoint.service.ParameterEntryService;
 import mg.healthpoint.service.PatientService;
 
-@Controller
+@RestController
 @AllArgsConstructor
 public class PatientRestController {
 	
