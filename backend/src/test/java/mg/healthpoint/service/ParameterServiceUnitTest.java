@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import mg.healthpoint.entity.Account;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.Patient;
+import mg.healthpoint.entity.Role;
 import mg.healthpoint.exception.NotFoundException;
 import mg.healthpoint.repository.ParameterRepository;
 
@@ -32,7 +34,8 @@ public class ParameterServiceUnitTest {
 	@Test
 	public void test_findUniqueById() throws NotFoundException {
 		
-		Account account = new Account(1, "johndoe", "pwdJohn", "John", "Doe", "Male", LocalDate.now(), "Itaosy", "033 72 209 28");
+		Role role = new Role(1, "Patient");
+		Account account = new Account(1, "johndoe", "pwdJohn", "John", "Doe", "Male", LocalDate.now(), "Itaosy", "033 72 209 28", Arrays.asList(role));
 		Patient patient = new Patient(1, account, "Room 67", "Mental illness", new ArrayList<Parameter>());
 		Parameter parameter = new Parameter(1, patient, "Temperature", "*C", 35.0, 42.0, new ArrayList<>());
 		when(parameterRepository.findById(1)).thenReturn(Optional.of(parameter));
