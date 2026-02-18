@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 
 import mg.healthpoint.dto.SignInRequest;
+import mg.healthpoint.entity.Account;
+import mg.healthpoint.repository.AccountRepository;
 
 @Service
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class AccountService {
 	
 	private JwtEncoder jwtEncoder;
 	private AuthenticationManager authenticationManager;
+	private AccountRepository accountRepository;
 	
 	public void authenticate(SignInRequest form) {
 		
@@ -32,9 +35,12 @@ public class AccountService {
 	
 	public String generateJWT(String username) {
 		
+		Account account = accountRepository.findWithRolesByUsername(username);
+		
 		JwtClaimsSet payload = JwtClaimsSet.builder()
 				.issuedAt(Instant.now())
-				.subject(username)
+				.subject(account.getUsername())
+				.claim("roles", account.getRoles().stream().map(role -> role.getName()).toArray(String[]::new))
 				.build();
 		
 		JwtEncoderParameters jwtEncoderParameters = JwtEncoderParameters.from(

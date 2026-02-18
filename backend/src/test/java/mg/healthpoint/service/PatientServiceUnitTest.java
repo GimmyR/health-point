@@ -22,6 +22,7 @@ import mg.healthpoint.entity.Account;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.ParameterEntry;
 import mg.healthpoint.entity.Patient;
+import mg.healthpoint.entity.Role;
 import mg.healthpoint.exception.NotFoundException;
 import mg.healthpoint.repository.ParameterRepository;
 import mg.healthpoint.repository.PatientRepository;
@@ -41,7 +42,8 @@ public class PatientServiceUnitTest {
 	@Test
 	public void test_findUniqueById() throws NotFoundException {
 		
-		Account account = new Account(1, "johndoe", "pwdJohn", "John", "Doe", "Male", LocalDate.now(), "Itaosy", "033 72 209 28");
+		Role role = new Role(1, "Patient");
+		Account account = new Account(1, "johndoe", "pwdJohn", "John", "Doe", "Male", LocalDate.now(), "Itaosy", "033 72 209 28", Arrays.asList(role));
 		Patient patient = new Patient(1, account, "Room 67", "Mental illness", new ArrayList<Parameter>());
 		Optional<Patient> opt = Optional.of(patient);
 		when(patientRepository.findById(1)).thenReturn(opt);
@@ -56,7 +58,8 @@ public class PatientServiceUnitTest {
 	public void test_findUniqueByUsername() throws NotFoundException {
 		
 		String username = "johndoe";
-		Account account = new Account(1, username, "pwdJohn", "John", "Doe", "Male", LocalDate.now(), "Itaosy", "033 72 209 28");
+		Role role = new Role(1, "Patient");
+		Account account = new Account(1, username, "pwdJohn", "John", "Doe", "Male", LocalDate.now(), "Itaosy", "033 72 209 28", Arrays.asList(role));
 		Patient patient = new Patient(1, account, "208", "Heartache", new ArrayList<>());
 		Parameter parameter = new Parameter(1, patient, "Temperature", "*C", 35.0, 42.0, new ArrayList<>());
 		Parameter parameter2 = new Parameter(1, patient, "Temperature", "*C", 35.0, 42.0, new ArrayList<>());
@@ -77,7 +80,8 @@ public class PatientServiceUnitTest {
 	public void test_mapToPatientResponse() {
 		
 		String username = "johndoe";
-		Account account = new Account(1, username, "pwdJohn", "John", "Doe", "Male", LocalDate.now(), "Itaosy", "033 72 209 28");
+		Role role = new Role(1, "Patient");
+		Account account = new Account(1, username, "pwdJohn", "John", "Doe", "Male", LocalDate.now(), "Itaosy", "033 72 209 28", Arrays.asList(role));
 		Patient patient = new Patient(1, account, "208", "Heartache", new ArrayList<>());
 		Parameter parameter = new Parameter(1, patient, "Temperature", "*C", 35.0, 42.0, new ArrayList<>());
 		ParameterEntry entry = new ParameterEntry(1, parameter, LocalDateTime.now(), 36.5);

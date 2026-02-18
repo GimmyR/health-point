@@ -22,7 +22,7 @@ public class PatientRestControllerIntegrationTest {
 	private MockMvc mockMvc;
 	
 	@Test
-	@WithMockUser(username = "johndoe")
+	@WithMockUser(username = "johndoe", roles = {"Patient"})
 	public void test_getPatient() throws Exception {
 		
 		mockMvc.perform(get("/api/patient"))
