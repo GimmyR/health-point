@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
+import mg.healthpoint.dto.PatientItemResponse;
 import mg.healthpoint.dto.PatientResponse;
 import mg.healthpoint.entity.Patient;
 import mg.healthpoint.exception.NotFoundException;
@@ -29,6 +30,15 @@ public class PatientRestController {
 		List<LocalDateTime> entryDates = parameterEntryService.findDistinctEntryDatesByPatientId(patient.getId());
 		PatientResponse response = patientService.mapToPatientResponse(patient, entryDates);
 		return ResponseEntity.ok(response);
+		
+	}
+	
+	@GetMapping("/api/patients")
+	public ResponseEntity<List<PatientItemResponse>> getPatients() {
+		
+		List<Patient> patients = patientService.findAllWithAccount();
+		List<PatientItemResponse> results = patientService.mapToListOfPatientItemResponse(patients);
+		return ResponseEntity.ok(results);
 		
 	}
 
