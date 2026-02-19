@@ -16,6 +16,11 @@ export default function Header() {
         });
     };
 
+    const signOut = () => {
+        localStorage.removeItem("jwtoken");
+        navigate("/sign-in");
+    };
+
     useEffect(() => {
         const jwtoken = localStorage.getItem("jwtoken");
 
@@ -31,7 +36,7 @@ export default function Header() {
                 <div className="d-flex flex-row">
                     <a href="#" className="text-light text-decoration-none fw-bold">HealthPoint</a>
                 </div>
-                <button type="button" className="btn btn-dark">Sign out</button>
+                <button type="button" onClick={signOut} className="btn btn-dark">Sign out</button>
             </div>
         </header>
     );
