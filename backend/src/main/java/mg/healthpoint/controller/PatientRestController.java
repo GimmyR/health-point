@@ -41,5 +41,13 @@ public class PatientRestController {
 		return ResponseEntity.ok(results);
 		
 	}
+	
+	@GetMapping("/api/is-patient")
+	public ResponseEntity<Boolean> isPatient(Authentication auth) {
+		
+		boolean result = patientService.isPatient(auth.getName());
+		return ResponseEntity.ok(result);
+		
+	}
 
 }

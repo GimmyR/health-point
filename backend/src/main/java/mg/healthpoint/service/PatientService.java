@@ -66,6 +66,13 @@ public class PatientService {
 		
 	}
 	
+	public boolean isPatient(String username) {
+		
+		Optional<Patient> opt = patientRepository.findByAccountUsername(username);
+		return opt.isPresent();
+		
+	}
+	
 	public PatientResponse mapToPatientResponse(Patient patient, List<LocalDateTime> entryDates) {
 		
 		List<ParameterResponse> parameters = new ArrayList<>();
