@@ -35,6 +35,13 @@ public class StaffService {
 		
 	}
 	
+	public boolean isStaff(String username) {
+		
+		Optional<Staff> opt = staffRepository.findByAccountUsername(username);
+		return opt.isPresent();
+		
+	}
+	
 	public Staff save(Staff staff) {
 		
 		return staffRepository.save(staff);
