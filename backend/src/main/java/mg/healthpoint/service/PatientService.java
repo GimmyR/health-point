@@ -12,6 +12,7 @@ import mg.healthpoint.dto.AccountResponse;
 import mg.healthpoint.dto.ParameterEntryResponse;
 import mg.healthpoint.dto.ParameterResponse;
 import mg.healthpoint.dto.PatientDetailsResponse;
+import mg.healthpoint.dto.PatientItemResponse;
 import mg.healthpoint.dto.PatientResponse;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.Patient;
@@ -26,9 +27,9 @@ public class PatientService {
 	private PatientRepository patientRepository;
 	private ParameterRepository parameterRepository;
 	
-	public List<Patient> findAll() {
+	public List<Patient> findAllWithAccount() {
 		
-		return patientRepository.findAll();
+		return patientRepository.findAllWithAccount();
 		
 	}
 	
@@ -65,6 +66,13 @@ public class PatientService {
 		
 	}
 	
+	public boolean isPatient(String username) {
+		
+		Optional<Patient> opt = patientRepository.findByAccountUsername(username);
+		return opt.isPresent();
+		
+	}
+	
 	public PatientResponse mapToPatientResponse(Patient patient, List<LocalDateTime> entryDates) {
 		
 		List<ParameterResponse> parameters = new ArrayList<>();
@@ -90,6 +98,24 @@ public class PatientService {
 				parameters, 
 				entryDates
 		);
+		
+	}
+	
+	public List<PatientItemResponse> mapToListOfPatientItemResponse(List<Patient> patients) {
+		
+		List<PatientItemResponse> results = new ArrayList<PatientItemResponse>();
+		
+		patients.forEach(patient -> {
+			results.add(new PatientItemResponse(
+					patient.getId(), 
+					patient.getAccount().getFirstname(), 
+					patient.getAccount().getLastname(), 
+					patient.getAccount().getGender(), 
+					patient.getRoom())
+			);
+		});
+		
+		return results;
 		
 	}
 	

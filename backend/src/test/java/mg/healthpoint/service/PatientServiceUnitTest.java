@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import mg.healthpoint.dto.PatientItemResponse;
 import mg.healthpoint.dto.PatientResponse;
 import mg.healthpoint.entity.Account;
 import mg.healthpoint.entity.Parameter;
@@ -101,6 +102,20 @@ public class PatientServiceUnitTest {
 		assertEquals(response.parameters().iterator().next().name(), parameter.getName());
 		assertEquals(response.parameters().iterator().next().entries().iterator().next().value(), entry.getValue());
 		assertEquals(response.entryDates().iterator().next().toString(), dateTime);
+		
+	}
+	
+	@Test
+	public void test_mapToListOfPatientItemResponse() {
+		
+		Role role = new Role(1, "Patient");
+		Account account = new Account(1, "johndoe", "pwdJohn", "John", "Doe", "Male", LocalDate.now(), "Itaosy", "033 72 209 28", Arrays.asList(role));
+		Patient patient = new Patient(1, account, "208", "Heartache", new ArrayList<>());
+		List<Patient> patients = Arrays.asList(patient);
+		List<PatientItemResponse> results = patientService.mapToListOfPatientItemResponse(patients);
+		
+		assertEquals(1, results.size());
+		assertEquals(patient.getAccount().getFirstname(), results.getFirst().firstname());
 		
 	}
 

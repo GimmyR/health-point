@@ -1,5 +1,6 @@
 package mg.healthpoint.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +11,9 @@ import mg.healthpoint.entity.Patient;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
+	
+	@Query("select p from Patient p join fetch p.account")
+	List<Patient> findAllWithAccount();
 	
 	Optional<Patient> findByAccountId(Integer id);
 	
