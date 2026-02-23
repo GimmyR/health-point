@@ -34,5 +34,14 @@ public class PatientRestControllerIntegrationTest {
 				.andExpect(jsonPath("$.entryDates[0]", is("2026-01-01T06:00:00")));
 		
 	}
+	
+	@Test
+	@WithMockUser(username = "ntsoaran", roles = {"Staff"})
+	public void test_getPatients() throws Exception {
+		
+		mockMvc.perform(get("/api/patients"))
+				.andExpect(status().isOk());
+		
+	}
 
 }
