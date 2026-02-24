@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
@@ -39,6 +40,16 @@ public class PatientRestController {
 		List<Patient> patients = patientService.findAllWithAccount();
 		List<PatientItemResponse> results = patientService.mapToListOfPatientItemResponse(patients);
 		return ResponseEntity.ok(results);
+		
+	}
+	
+	@GetMapping("/api/patients/{id}")
+	public ResponseEntity<PatientResponse> getPatient(@PathVariable Integer id) throws NotFoundException {
+		
+		Patient patient = patientService.findUniqueWithParametersById(id);
+		List<LocalDateTime> entryDates = parameterEntryService.findDistinctEntryDatesByPatientId(patient.getId());
+		PatientResponse response = patientService.mapToPatientResponse(patient, entryDates);
+		return ResponseEntity.ok(response);
 		
 	}
 	
