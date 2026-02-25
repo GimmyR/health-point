@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import type { IPatientItem } from "../interfaces/IPatientItem";
 
 type Props = {
@@ -21,7 +22,7 @@ export default function PatientsTable({ patients } : Props) {
                 <td>{patient.lastname}</td>
                 <td>{patient.gender}</td>
                 <td>{patient.room}</td>
-                <td><a href="#">Details</a></td>
+                <td><NavLink to={`/patient/${patient.id}`}>Details</NavLink></td>
             </tr>)}
         </tbody>
     </table>
