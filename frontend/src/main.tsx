@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import './main.css';
 import SignIn from './components/SignIn.tsx';
+import PatientForStaff from './components/PatientForStaff.tsx';
 
 const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
             {
                 path: "sign-in",
                 element: <SignIn/>
+            },
+            {
+                path: "patient/:id",
+                element: <PatientForStaff/>
             }
         ]
     }
