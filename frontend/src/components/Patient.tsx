@@ -6,11 +6,16 @@ import PatientInfo from "./PatientInfo";
 import type IPatient from "../interfaces/IPatient";
 import { BACKEND } from "../lib/url";
 
-export default function Patient() {
+type Props = {
+    id?: number
+};
+
+export default function Patient({ id } : Props) {
     const [patient, setPatient] = useState<IPatient | undefined>();
 
     const fetchPatient = async () => {
-        const response = await fetch(`${BACKEND}/api/patient`, { 
+        const route = id ? "patients/" + id : "patient";
+        const response = await fetch(`${BACKEND}/api/${route}`, { 
             headers: { 
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}` 
             } 
