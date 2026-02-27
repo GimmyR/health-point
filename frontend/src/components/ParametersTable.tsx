@@ -1,6 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import type Parameter from "../interfaces/Parameter";
 
 export default function ParametersTable({ dateTimes, parameters } : { dateTimes: string[], parameters: Parameter[] }) {
+    const navigate = useNavigate();
+
+    const editData = (dateTime: string, parameterId: number) => {
+        navigate(`/entries/${parameterId}?dt=${dateTime}`);
+    };
+
     return <table className="table table-bordered text-center">
         <thead>
             <tr>
@@ -11,7 +18,7 @@ export default function ParametersTable({ dateTimes, parameters } : { dateTimes:
         <tbody>
             {dateTimes.map(dt => <tr key={dt}>
                 <td>{new Date(dt).toLocaleString()}</td>
-                {parameters.map(param => <td key={`${dt} ${param.id}`}>{param.entries.find(entry => entry.entryDate == dt)?.value}</td>)}
+                {parameters.map(param => <td key={`${dt} ${param.id}`} onClick={() => editData(dt, param.id)}>{param.entries.find(entry => entry.entryDate == dt)?.value}</td>)}
             </tr>)}
         </tbody>
     </table>
