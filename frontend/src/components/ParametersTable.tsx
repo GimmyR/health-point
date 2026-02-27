@@ -5,7 +5,7 @@ export default function ParametersTable({ dateTimes, parameters } : { dateTimes:
     const navigate = useNavigate();
 
     const editData = (dateTime: string, parameterId: number) => {
-        navigate(`/entries/${parameterId}?dt=${dateTime}`);
+        navigate(`/edit-entry/${parameterId}?dt=${dateTime}`);
     };
 
     return <table className="table table-bordered text-center">
