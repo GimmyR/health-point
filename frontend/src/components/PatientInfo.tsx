@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 type Props = {
     id?: number,
     patient: {
@@ -17,9 +19,9 @@ export default function PatientInfo({ id, patient } : Props) {
             </li>
         </ul>
         {id && <div className="d-flex flex-row justify-content-lg-end mb-3 mb-lg-0">
-            <button type="button" className="btn btn-primary py-1">
+            <NavLink to={`/edit-info/${id}`} className="btn btn-primary py-1">
                 <i className="bi bi-pencil-fill me-2"></i>Edit
-            </button>
+            </NavLink>
         </div>}
     </>
 }
