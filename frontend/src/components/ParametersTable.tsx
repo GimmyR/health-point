@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import type Parameter from "../interfaces/Parameter";
 
-export default function ParametersTable({ dateTimes, parameters } : { dateTimes: string[], parameters: Parameter[] }) {
+export default function ParametersTable({ isStaff, dateTimes, parameters } : { isStaff?: boolean, dateTimes: string[], parameters: Parameter[] }) {
     const navigate = useNavigate();
 
     const editData = (dateTime: string, parameterId: number) => {
-        navigate(`/edit-entry/${parameterId}?dt=${dateTime}`);
+        if(isStaff)
+            navigate(`/edit-entry/${parameterId}?dt=${dateTime}`);
     };
 
     return <table className="table table-bordered text-center">
