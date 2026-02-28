@@ -26,5 +26,12 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
 	where p.account.username = :username		
 	""")
 	Optional<Patient> findWithParametersByUsername(@Param("username") String username);
+	
+	@Query("""
+	select p from Patient p
+	left join fetch p.parameters
+	where p.id = :id		
+	""")
+	Optional<Patient> findWithParametersById(@Param("id") Integer id);
 
 }

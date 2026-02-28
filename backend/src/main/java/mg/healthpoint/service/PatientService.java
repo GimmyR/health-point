@@ -53,16 +53,39 @@ public class PatientService {
 		
 		Patient result = opt.get();
 		
-		result.getParameters().forEach(param -> {
-			
-			Optional<Parameter> optParam = parameterRepository.findWithEntriesById(param.getId());
-			
-			if(optParam.isEmpty())
-				System.out.println(String.format("Parameter (ID: %d) not found", param.getId()));
-			
-			else param.editDetails(optParam.get().getDetails());
-			
-		}); return result;
+		result.getParameters().forEach(param -> { 
+			this.mapParametersWithEntries(param); 
+		});
+		
+		return result;
+		
+	}
+	
+	private void mapParametersWithEntries(Parameter param) {
+		
+		Optional<Parameter> optParam = parameterRepository.findWithEntriesById(param.getId());
+		
+		if(optParam.isEmpty())
+			System.out.println(String.format("Parameter (ID: %d) not found", param.getId()));
+		
+		else param.editDetails(optParam.get().getDetails());
+		
+	}
+	
+	public Patient findUniqueWithParametersById(Integer id) throws NotFoundException {
+		
+		Optional<Patient> opt = patientRepository.findWithParametersById(id);
+		
+		if(opt.isEmpty())
+			throw new NotFoundException("Patient not found");
+		
+		Patient result = opt.get();
+		
+		result.getParameters().forEach(param -> { 
+			this.mapParametersWithEntries(param); 
+		});
+		
+		return result;
 		
 	}
 	

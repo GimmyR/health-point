@@ -6,11 +6,17 @@ import PatientInfo from "./PatientInfo";
 import type IPatient from "../interfaces/IPatient";
 import { BACKEND } from "../lib/url";
 
-export default function Patient() {
+type Props = {
+    isStaff?: boolean,
+    id?: number
+};
+
+export default function Patient({ isStaff, id } : Props) {
     const [patient, setPatient] = useState<IPatient | undefined>();
 
     const fetchPatient = async () => {
-        const response = await fetch(`${BACKEND}/api/patient`, { 
+        const route = id ? "patients/" + id : "patient";
+        const response = await fetch(`${BACKEND}/api/${route}`, { 
             headers: { 
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}` 
             } 
@@ -33,14 +39,14 @@ export default function Patient() {
                     <AccountInfo account={patient.account}/>
                 </div>
                 <div className="col-12 col-lg-6">
-                    <PatientInfo patient={patient.details}/>
+                    <PatientInfo isStaff={isStaff} id={id} patient={patient.details}/>
                 </div>
             </div>
             <div className="d-flex flex-column mb-5">
                 {patient.parameters.map(param => <HPChart key={param.id} parameter={param}/>)}
             </div>
             <div className="d-flex flex-column">
-                <ParametersTable dateTimes={patient.entryDates} parameters={patient.parameters}/>
+                <ParametersTable isStaff={isStaff} dateTimes={patient.entryDates} parameters={patient.parameters}/>
             </div>
         </div>}
     </main>
