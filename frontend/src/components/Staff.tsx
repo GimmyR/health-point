@@ -34,8 +34,10 @@ export default function Staff() {
                 </div>
             </div>
         </main>
-        <NavLink to="/add-patient" className="btn btn-dark position-absolute bottom-0 end-0 me-4 me-lg-5 mb-4">
-            <i className="bi bi-plus-lg me-2"></i>Add patient
-        </NavLink>
+        <div className="d-flex flex-row justify-content-end fixed-bottom pe-4 pe-lg-4 pb-4">
+            <NavLink to="/add-patient" className="btn btn-dark pe-3">
+                <i className="bi bi-plus-lg me-2"></i>Add patient
+            </NavLink>
+        </div>
     </>
 }
