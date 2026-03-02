@@ -5,6 +5,7 @@ import ParametersTable from "./ParametersTable";
 import PatientInfo from "./PatientInfo";
 import type IPatient from "../interfaces/IPatient";
 import { BACKEND } from "../lib/url";
+import AddParameterOrEntry from "./AddParameterOrEntryButton";
 
 type Props = {
     isStaff?: boolean,
@@ -52,15 +53,7 @@ export default function Patient({ isStaff, id } : Props) {
             </div>}
         </main>
         {isStaff && <div className="d-flex flex-row justify-content-end fixed-bottom pe-4 pe-lg-4 pb-4">
-            <div className="dropdown dropstart">
-                <button type="button" className="btn btn-dark pe-3" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i className="bi bi-plus-lg me-2"></i>Add
-                </button>
-                <ul className="dropdown-menu dropdown-menu-dark">
-                    <li><a className="dropdown-item" href="#"><i className="bi bi-sliders2-vertical me-2"></i>Parameter</a></li>
-                    <li><a className="dropdown-item" href="#"><i className="bi bi-graph-up-arrow me-2"></i>Entry</a></li>
-                </ul>
-            </div>
+            <AddParameterOrEntry/>
         </div>}
     </>
 }
