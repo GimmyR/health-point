@@ -53,6 +53,15 @@ public class PatientRestController {
 		
 	}
 	
+	@GetMapping("/api/patient-details/{id}")
+	public ResponseEntity<PatientResponse> getPatientDetails(@PathVariable Integer id) throws NotFoundException {
+		
+		Patient patient = patientService.findUniqueById(id);
+		PatientResponse response = patientService.mapToPatientResponseWithoutParametersAndEntryDates(patient);
+		return ResponseEntity.ok(response);
+		
+	}
+	
 	@GetMapping("/api/is-patient")
 	public ResponseEntity<Boolean> isPatient(Authentication auth) {
 		

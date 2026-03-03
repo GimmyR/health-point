@@ -35,5 +35,12 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
 	where p.id = :id		
 	""")
 	Optional<Patient> findWithParametersById(@Param("id") Integer id);
+	
+	@Query("""
+	select p from Patient p
+	join fetch p.account
+	where p.id = :id
+	""")
+	Optional<Patient> findWithAccountById(@Param("id") Integer id);
 
 }

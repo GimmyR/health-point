@@ -35,7 +35,7 @@ public class PatientService {
 	
 	public Patient findUniqueById(Integer id) throws NotFoundException {
 		
-		Optional<Patient> opt = patientRepository.findById(id);
+		Optional<Patient> opt = patientRepository.findWithAccountById(id);
 		
 		if(opt.isPresent())
 			return opt.get();
@@ -139,6 +139,22 @@ public class PatientService {
 		});
 		
 		return results;
+		
+	}
+	
+	public PatientResponse mapToPatientResponseWithoutParametersAndEntryDates(Patient patient) {
+		
+		return new PatientResponse(
+				new AccountResponse(
+						patient.getAccount().getFirstname(),
+						patient.getAccount().getLastname(),
+						patient.getAccount().getGender(),
+						patient.getAccount().getDateOfBirth(),
+						patient.getAccount().getAddress()),
+				new PatientDetailsResponse(patient.getRoom(), patient.getDiagnosis()),
+				null, 
+				null
+		);
 		
 	}
 	
