@@ -47,7 +47,7 @@ public class PatientServiceUnitTest {
 		Account account = new Account(1, "johndoe", "pwdJohn", "John", "Doe", "Male", LocalDate.now(), "Itaosy", "033 72 209 28", Arrays.asList(role));
 		Patient patient = new Patient(1, account, "Room 67", "Mental illness", new ArrayList<Parameter>());
 		Optional<Patient> opt = Optional.of(patient);
-		when(patientRepository.findById(1)).thenReturn(opt);
+		when(patientRepository.findWithAccountById(1)).thenReturn(opt);
 		
 		Patient pat = patientService.findUniqueById(1);
 		assertNotNull(pat);
