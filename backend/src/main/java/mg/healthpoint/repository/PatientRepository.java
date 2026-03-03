@@ -22,6 +22,7 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
 	
 	@Query("""
 	select p from Patient p
+	join fetch p.account
 	left join fetch p.parameters
 	where p.account.username = :username		
 	""")
@@ -29,6 +30,7 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
 	
 	@Query("""
 	select p from Patient p
+	join fetch p.account
 	left join fetch p.parameters
 	where p.id = :id		
 	""")
