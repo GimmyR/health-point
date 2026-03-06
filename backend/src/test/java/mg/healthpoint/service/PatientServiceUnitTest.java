@@ -98,7 +98,7 @@ public class PatientServiceUnitTest {
 		
 		PatientResponse response = patientService.mapToPatientResponse(patient, entryDates);
 		assertEquals(response.account().firstname(), patient.getAccount().getFirstname());
-		assertEquals(response.details().room(), patient.getRoom());
+		assertEquals(response.room(), patient.getRoom());
 		assertEquals(response.parameters().iterator().next().name(), parameter.getName());
 		assertEquals(response.parameters().iterator().next().entries().iterator().next().value(), entry.getValue());
 		assertEquals(response.entryDates().iterator().next().toString(), dateTime);

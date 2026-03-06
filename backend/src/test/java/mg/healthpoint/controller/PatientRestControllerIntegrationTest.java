@@ -28,7 +28,7 @@ public class PatientRestControllerIntegrationTest {
 		mockMvc.perform(get("/api/patient"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.account.firstname", is("John")))
-				.andExpect(jsonPath("$.details.room", is("26C")))
+				.andExpect(jsonPath("$.room", is("26C")))
 				.andExpect(jsonPath("$.parameters[0].name", is("Weight")))
 				.andExpect(jsonPath("$.parameters[0].entries[0].value", is(100.0)))
 				.andExpect(jsonPath("$.entryDates[0]", is("2026-01-01T06:00:00")));
@@ -51,7 +51,7 @@ public class PatientRestControllerIntegrationTest {
 		mockMvc.perform(get("/api/patients/1"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.account.firstname", is("John")))
-				.andExpect(jsonPath("$.details.room", is("26C")))
+				.andExpect(jsonPath("$.room", is("26C")))
 				.andExpect(jsonPath("$.parameters[0].name", is("Weight")))
 				.andExpect(jsonPath("$.parameters[0].entries[0].value", is(100.0)))
 				.andExpect(jsonPath("$.entryDates[0]", is("2026-01-01T06:00:00")));
