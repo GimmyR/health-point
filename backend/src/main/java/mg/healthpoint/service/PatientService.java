@@ -11,7 +11,6 @@ import mg.healthpoint.exception.NotFoundException;
 import mg.healthpoint.dto.AccountResponse;
 import mg.healthpoint.dto.ParameterEntryResponse;
 import mg.healthpoint.dto.ParameterResponse;
-import mg.healthpoint.dto.PatientDetailsResponse;
 import mg.healthpoint.dto.PatientItemResponse;
 import mg.healthpoint.dto.PatientResponse;
 import mg.healthpoint.entity.Parameter;
@@ -111,13 +110,15 @@ public class PatientService {
 		});
 		
 		return new PatientResponse(
+				patient.getId(),
+				patient.getRoom(),
+				patient.getDiagnosis(),
 				new AccountResponse(
 						patient.getAccount().getFirstname(),
 						patient.getAccount().getLastname(),
 						patient.getAccount().getGender(),
 						patient.getAccount().getDateOfBirth(),
 						patient.getAccount().getAddress()),
-				new PatientDetailsResponse(patient.getRoom(), patient.getDiagnosis()),
 				parameters, 
 				entryDates
 		);
@@ -145,13 +146,15 @@ public class PatientService {
 	public PatientResponse mapToPatientResponseWithoutParametersAndEntryDates(Patient patient) {
 		
 		return new PatientResponse(
+				patient.getId(),
+				patient.getRoom(),
+				patient.getDiagnosis(),
 				new AccountResponse(
 						patient.getAccount().getFirstname(),
 						patient.getAccount().getLastname(),
 						patient.getAccount().getGender(),
 						patient.getAccount().getDateOfBirth(),
 						patient.getAccount().getAddress()),
-				new PatientDetailsResponse(patient.getRoom(), patient.getDiagnosis()),
 				null, 
 				null
 		);
