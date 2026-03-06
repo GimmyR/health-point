@@ -3,8 +3,10 @@ package mg.healthpoint.dto;
 import java.time.LocalDateTime;
 
 public record PatientResponse(
+	Integer id,
+	String room,
+	String diagnosis,
 	AccountResponse account,
-	PatientDetailsResponse details,
 	Iterable<ParameterResponse> parameters,
 	Iterable<LocalDateTime> entryDates
 ) {}
