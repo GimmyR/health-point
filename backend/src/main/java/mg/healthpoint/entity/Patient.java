@@ -40,6 +40,14 @@ public class Patient {
 	
 	// METHODS :
 	
+	public void editRoom(String room) {
+		this.room = room;
+	}
+	
+	public void editDiagnosis(String diagnosis) {
+		this.diagnosis = diagnosis;
+	}
+	
 	public void editParameters(List<Parameter> parameters) {
 		
 		this.parameters = parameters;
