@@ -3,15 +3,19 @@ package mg.healthpoint.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import mg.healthpoint.dto.PatientItemResponse;
 import mg.healthpoint.dto.PatientResponse;
+import mg.healthpoint.dto.SavePatientRequest;
 import mg.healthpoint.entity.Patient;
 import mg.healthpoint.exception.NotFoundException;
 import mg.healthpoint.service.ParameterEntryService;
@@ -67,6 +71,14 @@ public class PatientRestController {
 		
 		boolean result = patientService.isPatient(auth.getName());
 		return ResponseEntity.ok(result);
+		
+	}
+	
+	@PostMapping("/api/save-patient")
+	public ResponseEntity<Integer> savePatient(@Valid @RequestBody SavePatientRequest form) throws NotFoundException {
+		
+		Patient patient = patientService.save(form);
+		return ResponseEntity.status(HttpStatus.CREATED).body(patient.getId());
 		
 	}
 

@@ -13,6 +13,7 @@ import mg.healthpoint.dto.ParameterEntryResponse;
 import mg.healthpoint.dto.ParameterResponse;
 import mg.healthpoint.dto.PatientItemResponse;
 import mg.healthpoint.dto.PatientResponse;
+import mg.healthpoint.dto.SavePatientRequest;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.Patient;
 import mg.healthpoint.repository.ParameterRepository;
@@ -161,7 +162,16 @@ public class PatientService {
 		
 	}
 	
-	public Patient save(Patient patient) {
+	public Patient save(SavePatientRequest form) throws NotFoundException {
+		
+		Patient patient = this.findUniqueById(form.id());
+		patient.editRoom(form.room());
+		patient.editDiagnosis(form.diagnosis());
+		patient.getAccount().editFirstname(form.account().firstname());
+		patient.getAccount().editLastname(form.account().lastname());
+		patient.getAccount().editGender(form.account().gender());
+		patient.getAccount().editDateOfBirth(form.account().dateOfBirth());
+		patient.getAccount().editAddress(form.account().address());
 		
 		return patientRepository.save(patient);
 		
