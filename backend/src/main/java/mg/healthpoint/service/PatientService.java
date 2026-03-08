@@ -11,9 +11,9 @@ import mg.healthpoint.exception.NotFoundException;
 import mg.healthpoint.dto.AccountResponse;
 import mg.healthpoint.dto.ParameterEntryResponse;
 import mg.healthpoint.dto.ParameterResponse;
-import mg.healthpoint.dto.PatientDetailsResponse;
 import mg.healthpoint.dto.PatientItemResponse;
 import mg.healthpoint.dto.PatientResponse;
+import mg.healthpoint.dto.SavePatientRequest;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.Patient;
 import mg.healthpoint.repository.ParameterRepository;
@@ -35,7 +35,7 @@ public class PatientService {
 	
 	public Patient findUniqueById(Integer id) throws NotFoundException {
 		
-		Optional<Patient> opt = patientRepository.findById(id);
+		Optional<Patient> opt = patientRepository.findWithAccountById(id);
 		
 		if(opt.isPresent())
 			return opt.get();
@@ -111,13 +111,15 @@ public class PatientService {
 		});
 		
 		return new PatientResponse(
+				patient.getId(),
+				patient.getRoom(),
+				patient.getDiagnosis(),
 				new AccountResponse(
 						patient.getAccount().getFirstname(),
 						patient.getAccount().getLastname(),
 						patient.getAccount().getGender(),
 						patient.getAccount().getDateOfBirth(),
 						patient.getAccount().getAddress()),
-				new PatientDetailsResponse(patient.getRoom(), patient.getDiagnosis()),
 				parameters, 
 				entryDates
 		);
@@ -142,7 +144,34 @@ public class PatientService {
 		
 	}
 	
-	public Patient save(Patient patient) {
+	public PatientResponse mapToPatientResponseWithoutParametersAndEntryDates(Patient patient) {
+		
+		return new PatientResponse(
+				patient.getId(),
+				patient.getRoom(),
+				patient.getDiagnosis(),
+				new AccountResponse(
+						patient.getAccount().getFirstname(),
+						patient.getAccount().getLastname(),
+						patient.getAccount().getGender(),
+						patient.getAccount().getDateOfBirth(),
+						patient.getAccount().getAddress()),
+				null, 
+				null
+		);
+		
+	}
+	
+	public Patient save(SavePatientRequest form) throws NotFoundException {
+		
+		Patient patient = this.findUniqueById(form.id());
+		patient.editRoom(form.room());
+		patient.editDiagnosis(form.diagnosis());
+		patient.getAccount().editFirstname(form.account().firstname());
+		patient.getAccount().editLastname(form.account().lastname());
+		patient.getAccount().editGender(form.account().gender());
+		patient.getAccount().editDateOfBirth(form.account().dateOfBirth());
+		patient.getAccount().editAddress(form.account().address());
 		
 		return patientRepository.save(patient);
 		

@@ -47,5 +47,39 @@ public class Account {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable
 	private List<Role> roles = new ArrayList<Role>();
+	
+	// METHODS :
+
+	public void editUsername(String username) {
+		this.username = username;
+	}
+
+	public void editPassword(String password) {
+		this.password = password;
+	}
+
+	public void editFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public void editLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public void editGender(String gender) {
+		this.gender = gender;
+	}
+
+	public void editDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public void editAddress(String address) {
+		this.address = address;
+	}
+
+	public void editContact(String contact) {
+		this.contact = contact;
+	}
 
 }
