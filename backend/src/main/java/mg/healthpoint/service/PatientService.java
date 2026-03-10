@@ -119,7 +119,8 @@ public class PatientService {
 						patient.getAccount().getLastname(),
 						patient.getAccount().getGender(),
 						patient.getAccount().getDateOfBirth(),
-						patient.getAccount().getAddress()),
+						patient.getAccount().getAddress(),
+						patient.getAccount().getContact()),
 				parameters, 
 				entryDates
 		);
@@ -155,7 +156,8 @@ public class PatientService {
 						patient.getAccount().getLastname(),
 						patient.getAccount().getGender(),
 						patient.getAccount().getDateOfBirth(),
-						patient.getAccount().getAddress()),
+						patient.getAccount().getAddress(),
+						patient.getAccount().getContact()),
 				null, 
 				null
 		);
