@@ -38,7 +38,7 @@ export default function Patient({ isStaff, id } : Props) {
             {patient && <div className="pt-4 pb-3">
                 <div className="d-flex flex-column flex-lg-row">
                     <div className="col-12 col-lg-6">
-                        <AccountInfo account={patient.account}/>
+                        <AccountInfo isStaff={isStaff} account={patient.account}/>
                     </div>
                     <div className="col-12 col-lg-6">
                         <PatientInfo isStaff={isStaff} id={id} room={patient.room} diagnosis={patient.diagnosis}/>
