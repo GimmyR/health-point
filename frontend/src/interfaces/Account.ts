@@ -3,5 +3,6 @@ export default interface Account {
     lastname: string,
     gender: string,
     dateOfBirth: string,
-    address: string
+    address: string,
+    contact: string
 }
