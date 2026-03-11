@@ -19,5 +19,8 @@ public record SaveAccountRequest(
 		LocalDate dateOfBirth,
 		
 		@NotBlank(message = "Address is missing")
-		String address
+		String address,
+		
+		@NotBlank(message = "Contact is missing")
+		String contact
 ) {}

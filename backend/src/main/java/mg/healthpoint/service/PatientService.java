@@ -174,6 +174,7 @@ public class PatientService {
 		patient.getAccount().editGender(form.account().gender());
 		patient.getAccount().editDateOfBirth(form.account().dateOfBirth());
 		patient.getAccount().editAddress(form.account().address());
+		patient.getAccount().editContact(form.account().contact());
 		
 		return patientRepository.save(patient);
 		
