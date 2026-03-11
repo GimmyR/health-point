@@ -41,7 +41,7 @@ export default function EditPatientForm({ patient } : Props) {
             .catch(error => console.error(error));
     };
 
-    return <form onSubmit={handleSubmit}>
+    return <form onSubmit={handleSubmit} className="pb-5">
         <div className="mb-3">
             <Input type="text" id="firstname" label="Firstname" inputValue={patient ? patient.account.firstname : ""}/>
         </div>
