@@ -13,9 +13,12 @@ import mg.healthpoint.dto.ParameterEntryResponse;
 import mg.healthpoint.dto.ParameterResponse;
 import mg.healthpoint.dto.PatientItemResponse;
 import mg.healthpoint.dto.PatientResponse;
+import mg.healthpoint.dto.SaveAccountRequest;
 import mg.healthpoint.dto.SavePatientRequest;
+import mg.healthpoint.entity.Account;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.Patient;
+import mg.healthpoint.repository.AccountRepository;
 import mg.healthpoint.repository.ParameterRepository;
 import mg.healthpoint.repository.PatientRepository;
 
@@ -26,6 +29,7 @@ public class PatientService {
 	
 	private PatientRepository patientRepository;
 	private ParameterRepository parameterRepository;
+	private AccountRepository accountRepository;
 	
 	public List<Patient> findAllWithAccount() {
 		
@@ -166,6 +170,25 @@ public class PatientService {
 	
 	public Patient save(SavePatientRequest form) throws NotFoundException {
 		
+		Patient patient = null;
+		
+		if(form.id() != null)
+			patient = this.savePatient(form);
+			
+		else {
+			
+			Account account = this.saveAccount(form.account());
+			patient = new Patient();
+			patient.editAccount(account);
+			patient.editRoom(form.room());
+			patient.editDiagnosis(form.diagnosis());
+			
+		} return patientRepository.save(patient);
+		
+	}
+	
+	private Patient savePatient(SavePatientRequest form) throws NotFoundException {
+		
 		Patient patient = this.findUniqueById(form.id());
 		patient.editRoom(form.room());
 		patient.editDiagnosis(form.diagnosis());
@@ -176,7 +199,21 @@ public class PatientService {
 		patient.getAccount().editAddress(form.account().address());
 		patient.getAccount().editContact(form.account().contact());
 		
-		return patientRepository.save(patient);
+		return patient;
+		
+	}
+	
+	private Account saveAccount(SaveAccountRequest form) {
+		
+		Account account = new Account();
+		account.editFirstname(form.firstname());
+		account.editLastname(form.lastname());
+		account.editGender(form.gender());
+		account.editDateOfBirth(form.dateOfBirth());
+		account.editAddress(form.address());
+		account.editContact(form.contact());
+		
+		return this.accountRepository.save(account);
 		
 	}
 	
