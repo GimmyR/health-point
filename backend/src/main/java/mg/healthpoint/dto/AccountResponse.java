@@ -7,7 +7,8 @@ public record AccountResponse(
 	String lastname,
 	String gender,
 	LocalDate dateOfBirth,
-	String address
+	String address,
+	String contact
 ) {
 
 }

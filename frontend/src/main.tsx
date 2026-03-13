@@ -9,6 +9,7 @@ import SignIn from './components/SignIn.tsx';
 import PatientForStaff from './components/PatientForStaff.tsx';
 import EditEntry from './components/EditEntry.tsx';
 import EditInfo from './components/EditInfo.tsx';
+import AddPatient from './components/AddPatient.tsx';
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path: "edit-entry/:id",
                 element: <EditEntry/>
+            },
+            {
+                path: "add-patient",
+                element: <AddPatient/>
             }
         ]
     }

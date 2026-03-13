@@ -76,7 +76,13 @@ public class PatientRestControllerIntegrationTest {
 		
 		mockMvc.perform(post("/api/save-patient")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsBytes(new SavePatientRequest(1, "25B", "Nephrotic Syndrome", new SaveAccountRequest("John", "Doe", "Male", LocalDate.of(1996, 11, 11), "Itaosy Cité Akany Sambatra Lot B29, Antananarivo, Analamanga, Madagascar")))))
+				.content(objectMapper.writeValueAsBytes(new SavePatientRequest(
+						1, "25B", "Nephrotic Syndrome", 
+						new SaveAccountRequest(
+								"John", "Doe", "Male", 
+								LocalDate.of(1996, 11, 11), 
+								"Itaosy Cité Akany Sambatra Lot B29, Antananarivo, Analamanga, Madagascar",
+								"033 62 667 74 / johndoe@example.com")))))
 				.andExpect(status().isCreated())
 				.andExpect(jsonPath("$", is(1)));
 		

@@ -9,18 +9,21 @@ export default function ParametersTable({ isStaff, dateTimes, parameters } : { i
             navigate(`/edit-entry/${parameterId}?dt=${dateTime}`);
     };
 
-    return <table className="table table-bordered text-center">
-        <thead>
-            <tr>
-                <th>Date & time</th>
-                {parameters.map(param => <th key={`th-${param.id}`}>{param.name}</th>)}
-            </tr>
-        </thead>
-        <tbody>
-            {dateTimes.map(dt => <tr key={dt}>
-                <td>{new Date(dt).toLocaleString()}</td>
-                {parameters.map(param => <td key={`${dt} ${param.id}`} onClick={() => editData(dt, param.id)}>{param.entries.find(entry => entry.entryDate == dt)?.value}</td>)}
-            </tr>)}
-        </tbody>
-    </table>
+    return <>
+        {parameters.length > 0 ? <table className="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Date & time</th>
+                    {parameters.map(param => <th key={`th-${param.id}`}>{param.name}</th>)}
+                </tr>
+            </thead>
+            <tbody>
+                {dateTimes.map(dt => <tr key={dt}>
+                    <td>{new Date(dt).toLocaleString()}</td>
+                    {parameters.map(param => <td key={`${dt} ${param.id}`} onClick={() => editData(dt, param.id)}>{param.entries.find(entry => entry.entryDate == dt)?.value}</td>)}
+                </tr>)}
+            </tbody>
+        </table>
+        : <div className="text-bg-secondary text-uppercase fw-bold text-center mt-3 py-3">No parameter</div>}
+    </>
 }

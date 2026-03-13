@@ -19,7 +19,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Patient {
 	
 	@Id
@@ -39,6 +40,10 @@ public class Patient {
 	private List<Parameter> parameters = new ArrayList<Parameter>();
 	
 	// METHODS :
+	
+	public void editAccount(Account account) {
+		this.account = account;
+	}
 	
 	public void editRoom(String room) {
 		this.room = room;

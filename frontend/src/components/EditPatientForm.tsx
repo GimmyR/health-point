@@ -24,7 +24,8 @@ export default function EditPatientForm({ patient } : Props) {
                 lastname: formData.get("lastname") as string,
                 gender: formData.get("gender") as string,
                 dateOfBirth: formData.get("date-of-birth") as string,
-                address: formData.get("address") as string
+                address: formData.get("address") as string,
+                contact: formData.get("contact") as string
             }
         };
         
@@ -40,7 +41,7 @@ export default function EditPatientForm({ patient } : Props) {
             .catch(error => console.error(error));
     };
 
-    return <form onSubmit={handleSubmit}>
+    return <form onSubmit={handleSubmit} className="pb-5">
         <div className="mb-3">
             <Input type="text" id="firstname" label="Firstname" inputValue={patient ? patient.account.firstname : ""}/>
         </div>
@@ -58,6 +59,9 @@ export default function EditPatientForm({ patient } : Props) {
         </div>
         <div className="mb-3">
             <Input type="text" id="address" label="Address" inputValue={patient ? patient.account.address : ""}/>
+        </div>
+        <div className="mb-3">
+            <Input type="text" id="contact" label="Contact" inputValue={patient ? patient.account.contact : ""}/>
         </div>
         <div className="mb-3">
             <Input type="text" id="room" label="Room" inputValue={patient ? patient.room : ""}/>
