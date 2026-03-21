@@ -1,5 +1,6 @@
 package mg.healthpoint.exception;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -28,6 +29,13 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getBindingResult().getAllErrors().getFirst().getDefaultMessage());
+		
+	}
+	
+	@ExceptionHandler(BadRequestException.class)
+	public ResponseEntity<String> handleBadRequestException(BadRequestException e) {
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		
 	}
 	
