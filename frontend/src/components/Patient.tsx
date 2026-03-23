@@ -52,8 +52,8 @@ export default function Patient({ isStaff, id } : Props) {
                 </div>
             </div>}
         </main>
-        {isStaff && <div className="d-flex flex-row justify-content-end fixed-bottom pe-4 pe-lg-4 pb-4">
-            <AddParameterOrEntry/>
+        {isStaff && id && <div className="d-flex flex-row justify-content-end fixed-bottom pe-4 pe-lg-4 pb-4">
+            <AddParameterOrEntry patientId={id}/>
         </div>}
     </>
 }

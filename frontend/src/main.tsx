@@ -39,7 +39,7 @@ const router = createBrowserRouter([
                 element: <AddPatient/>
             },
             {
-                path: "add-parameter",
+                path: "add-parameter/:patientId",
                 element: <AddParameter/>
             }
         ]
