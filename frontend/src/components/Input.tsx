@@ -2,7 +2,7 @@ type Props = {
     type: string,
     id: string,
     label: string,
-    inputValue: string
+    inputValue: string | number
 };
 
 export default function Input({ type, id, label, inputValue } : Props) {

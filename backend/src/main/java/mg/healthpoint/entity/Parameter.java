@@ -46,6 +46,26 @@ public class Parameter {
 	
 	// METHODS :
 	
+	public void editPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public void editName(String name) {
+		this.name = name;
+	}
+
+	public void editUnit(String unit) {
+		this.unit = unit;
+	}
+
+	public void editMin(Double min) {
+		this.min = min;
+	}
+
+	public void editMax(Double max) {
+		this.max = max;
+	}
+	
 	public void editDetails(List<ParameterEntry> details) {
 		
 		this.details = details;
