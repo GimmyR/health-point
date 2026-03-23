@@ -32,7 +32,7 @@ export default function AddParameterForm({ patientId, parameter } : Props) {
             },
             body: JSON.stringify(newParameter)
         }).then(response => response.text())
-            .then(data => navigate(`/patient/${patientId}`))
+            .then(() => navigate(`/patient/${patientId}`))
             .catch(error => console.error(error));
     };
 
