@@ -10,7 +10,7 @@ export default function ParametersTable({ isStaff, dateTimes, parameters } : { i
     };
 
     return <>
-        {parameters.length > 0 ? <table className="table table-bordered text-center">
+        {parameters.length > 0 && <table className="table table-bordered text-center">
             <thead>
                 <tr>
                     <th>Date & time</th>
@@ -23,7 +23,7 @@ export default function ParametersTable({ isStaff, dateTimes, parameters } : { i
                     {parameters.map(param => <td key={`${dt} ${param.id}`} onClick={() => editData(dt, param.id)}>{param.entries.find(entry => entry.entryDate == dt)?.value}</td>)}
                 </tr>)}
             </tbody>
-        </table>
-        : <div className="text-bg-secondary text-uppercase fw-bold text-center mt-3 py-3">No parameter</div>}
+        </table>}
+        {parameters.entries.length == 0 && <div className="text-bg-secondary text-uppercase fw-bold text-center py-3">No data</div>}
     </>
 }
