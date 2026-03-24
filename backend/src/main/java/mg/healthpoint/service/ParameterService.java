@@ -1,5 +1,6 @@
 package mg.healthpoint.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 
 import mg.healthpoint.exception.NotFoundException;
+import mg.healthpoint.dto.ParameterResponse;
 import mg.healthpoint.dto.SaveParameterRequest;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.Patient;
@@ -71,6 +73,20 @@ public class ParameterService {
 	public void delete(Parameter parameter) {
 		
 		parameterRepository.delete(parameter);
+		
+	}
+	
+	public ParameterResponse mapToParameterResponseWithoutEntries(Parameter parameter) {
+		
+		ParameterResponse response = new ParameterResponse(
+				parameter.getId(), 
+				parameter.getName(), 
+				parameter.getUnit(),
+				parameter.getMin(),
+				parameter.getMax(),
+				new ArrayList<>());
+		
+		return response;
 		
 	}
 
