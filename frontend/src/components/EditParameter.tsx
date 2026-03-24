@@ -5,7 +5,7 @@ import type Parameter from "../interfaces/Parameter";
 import { BACKEND } from "../lib/url";
 
 export default function EditParameter() {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const parameterId = searchParams.get("id");
     const patientId = searchParams.get("patient");
     const [parameter, setParameter] = useState<Parameter>();
