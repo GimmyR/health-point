@@ -1,7 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import type Parameter from "../interfaces/Parameter";
 
-export default function ParametersTable({ isStaff, dateTimes, parameters } : { isStaff?: boolean, dateTimes: string[], parameters: Parameter[] }) {
+type Props = { 
+    patientId?: number,
+    isStaff?: boolean, 
+    dateTimes: string[], 
+    parameters: Parameter[] 
+};
+
+export default function ParametersTable({ patientId, isStaff, dateTimes, parameters } : Props) {
     const navigate = useNavigate();
 
     const editData = (dateTime: string, parameterId: number) => {
@@ -9,12 +16,16 @@ export default function ParametersTable({ isStaff, dateTimes, parameters } : { i
             navigate(`/edit-entry/${parameterId}?dt=${dateTime}`);
     };
 
+    const editParameter = (parameterId: number) => {
+        navigate(`/edit-parameter?id=${parameterId}&patient=${patientId}`);
+    };
+
     return <>
         {parameters.length > 0 && <table className="table table-bordered text-center">
             <thead>
                 <tr>
                     <th>Date & time</th>
-                    {parameters.map(param => <th key={`th-${param.id}`}>{param.name}</th>)}
+                    {parameters.map(param => <th key={`th-${param.id}`} onClick={() => editParameter(param.id)}>{param.name}</th>)}
                 </tr>
             </thead>
             <tbody>

@@ -48,7 +48,7 @@ export default function Patient({ isStaff, id } : Props) {
                     {patient.parameters.map(param => <HPChart key={param.id} parameter={param}/>)}
                 </div>}
                 <div className="d-flex flex-column mb-5">
-                    <ParametersTable isStaff={isStaff} dateTimes={patient.entryDates} parameters={patient.parameters}/>
+                    <ParametersTable patientId={id} isStaff={isStaff} dateTimes={patient.entryDates} parameters={patient.parameters}/>
                 </div>
             </div>}
         </main>
