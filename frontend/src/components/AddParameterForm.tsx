@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import type Parameter from "../interfaces/Parameter";
 import Input from "./Input";
 import { BACKEND } from "../lib/url";
@@ -10,6 +10,7 @@ type Props = {
 };
 
 export default function AddParameterForm({ patientId, parameter } : Props) {
+    const [error, setError] = useState<string | undefined>();
     const navigate = useNavigate();
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -24,16 +25,22 @@ export default function AddParameterForm({ patientId, parameter } : Props) {
             max: formData.get("max") ? parseFloat(formData.get("max") as string) : undefined
         };
 
-        fetch(`${BACKEND}/api/parameter/save`, {
+        const response = await fetch(`${BACKEND}/api/parameter/save`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}`
             },
             body: JSON.stringify(newParameter)
-        }).then(response => response.text())
-            .then(() => navigate(`/patient/${patientId}`))
-            .catch(error => console.error(error));
+        });
+
+        if(response.status == 201)
+            navigate(`/patient/${patientId}`);
+
+        else {
+            const data = await response.text();
+            setError(data);
+        }
     };
 
     return <form className="pb-5" onSubmit={handleSubmit}>
@@ -49,7 +56,8 @@ export default function AddParameterForm({ patientId, parameter } : Props) {
         <div className="mb-4 mb-lg-5">
             <Input type="number" id="max" label="Max" inputValue={parameter ? parameter.max : ""}/>
         </div>
-        <div className="d-flex flex-row justify-content-lg-end">
+        <div className="d-flex flex-column flex-lg-row justify-content-lg-end align-items-lg-center">
+            {error && <div className="text-center text-danger mb-4 mb-lg-0 me-lg-4">{error}</div>}
             <button type="submit" className="btn btn-primary col-12 col-lg-4">Save parameter</button>
         </div>
     </form>

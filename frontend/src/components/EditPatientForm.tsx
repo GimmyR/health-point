@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import type IPatient from "../interfaces/IPatient";
 import Input from "./Input";
 import { BACKEND } from "../lib/url";
@@ -11,6 +11,7 @@ type Props = {
 const genders = [ "Female", "Male" ];
 
 export default function EditPatientForm({ patient } : Props) {
+    const [error, setError] = useState<string | undefined>();
     const navigate = useNavigate();
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -29,19 +30,25 @@ export default function EditPatientForm({ patient } : Props) {
             }
         };
         
-        await fetch(`${BACKEND}/api/save-patient`, {
+        const response = await fetch(`${BACKEND}/api/save-patient`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}`
             },
             body: JSON.stringify(newPatient)
-        }).then(response => response.text())
-            .then(data => navigate(`/patient/${data}`))
-            .catch(error => console.error(error));
+        });
+
+        const data = await response.text();
+        console.log(response);
+        
+        if(response.status == 201)
+            navigate(`/patient/${data}`);
+        
+        else setError(data);
     };
 
-    return <form onSubmit={handleSubmit} className="pb-5">
+    return <form onSubmit={handleSubmit}>
         <div className="mb-3">
             <Input type="text" id="firstname" label="Firstname" inputValue={patient ? patient.account.firstname : ""}/>
         </div>
@@ -66,10 +73,11 @@ export default function EditPatientForm({ patient } : Props) {
         <div className="mb-3">
             <Input type="text" id="room" label="Room" inputValue={patient ? patient.room : ""}/>
         </div>
-        <div className="mb-4 mb-lg-5">
+        <div className="mb-4 mb-lg-4">
             <Input type="text" id="diagnosis" label="Diagnosis" inputValue={patient ? patient.diagnosis : ""}/>
         </div>
-        <div className="d-flex flex-row justify-content-lg-end">
+        <div className="d-flex flex-column flex-lg-row justify-content-lg-end align-items-lg-center">
+            {error && <div className="text-center text-danger mb-4 mb-lg-0 me-lg-4">{error}</div>}
             <button type="submit" className="btn btn-primary col-12 col-lg-4">Save informations</button>
         </div>
     </form>
