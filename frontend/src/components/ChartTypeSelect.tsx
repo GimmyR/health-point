@@ -1,4 +1,3 @@
-import "bootstrap/js/dist/dropdown";
 import type { ChangeEvent } from "react";
 
 type Props = {
