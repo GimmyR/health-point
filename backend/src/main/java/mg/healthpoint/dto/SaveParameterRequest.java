@@ -7,11 +7,11 @@ import jakarta.validation.constraints.Positive;
 public record SaveParameterRequest(
 		Integer id,
 		
-		@NotNull
-		@Positive
+		@NotNull(message = "Patient ID is missing")
+		@Positive(message = "Patient ID should be a positive integer")
 		Integer patientId,
 		
-		@NotBlank
+		@NotBlank(message = "Parameter name is missing")
 		String name,
 		
 		String unit,

@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import type IPatient from "../interfaces/IPatient";
 import Input from "./Input";
 import { BACKEND } from "../lib/url";
@@ -11,6 +11,7 @@ type Props = {
 const genders = [ "Female", "Male" ];
 
 export default function EditPatientForm({ patient } : Props) {
+    const [error, setError] = useState<string | undefined>();
     const navigate = useNavigate();
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -29,48 +30,53 @@ export default function EditPatientForm({ patient } : Props) {
             }
         };
         
-        await fetch(`${BACKEND}/api/save-patient`, {
+        const response = await fetch(`${BACKEND}/api/save-patient`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}`
             },
             body: JSON.stringify(newPatient)
-        }).then(response => response.text())
-            .then(data => navigate(`/patient/${data}`))
-            .catch(error => console.error(error));
+        });
+
+        const data = await response.text();
+        console.log(response);
+        
+        if(response.status == 201)
+            navigate(`/patient/${data}`);
+        
+        else setError(data);
     };
 
-    return <form onSubmit={handleSubmit} className="pb-5">
-        <div className="mb-3">
-            <Input type="text" id="firstname" label="Firstname" inputValue={patient ? patient.account.firstname : ""}/>
+    return <form onSubmit={handleSubmit}>
+        <Input type="text" id="firstname" label="Firstname" inputValue={patient ? patient.account.firstname : ""}/>
+        <Input type="text" id="lastname" label="Lastname" inputValue={patient ? patient.account.lastname : ""}/>
+        <div className="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-3">
+            <div className="me-lg-4">
+                <label htmlFor="gender" className="form-label">Gender</label>
+            </div>
+            <div className="col-lg-9">
+                <select id="gender" className="form-select text-secondary" name="gender" defaultValue={patient?.account.gender}>
+                    {genders.map(gender => <option key={gender} value={gender}>{gender}</option>)}
+                </select>
+            </div>
         </div>
-        <div className="mb-3">
-            <Input type="text" id="lastname" label="Lastname" inputValue={patient ? patient.account.lastname : ""}/>
-        </div>
-        <div className="mb-3">
-            <label htmlFor="gender" className="form-label">Gender</label>
-            <select id="gender" className="form-select text-secondary" name="gender" defaultValue={patient?.account.gender}>
-                {genders.map(gender => <option key={gender} value={gender}>{gender}</option>)}
-            </select>
-        </div>
-        <div className="mb-3">
-            <Input type="date" id="date-of-birth" label="Date of birth" inputValue={patient ? patient.account.dateOfBirth : ""}/>
-        </div>
-        <div className="mb-3">
-            <Input type="text" id="address" label="Address" inputValue={patient ? patient.account.address : ""}/>
-        </div>
-        <div className="mb-3">
-            <Input type="text" id="contact" label="Contact" inputValue={patient ? patient.account.contact : ""}/>
-        </div>
-        <div className="mb-3">
-            <Input type="text" id="room" label="Room" inputValue={patient ? patient.room : ""}/>
-        </div>
-        <div className="mb-4 mb-lg-5">
-            <Input type="text" id="diagnosis" label="Diagnosis" inputValue={patient ? patient.diagnosis : ""}/>
-        </div>
-        <div className="d-flex flex-row justify-content-lg-end">
+        <Input type="date" id="date-of-birth" label="Date of birth" inputValue={patient ? patient.account.dateOfBirth : ""}/>
+        <Input type="text" id="address" label="Address" inputValue={patient ? patient.account.address : ""}/>
+        <Input type="text" id="contact" label="Contact" inputValue={patient ? patient.account.contact : ""}/>
+        <Input type="text" id="room" label="Room" inputValue={patient ? patient.room : ""}/>
+        <Input type="text" id="diagnosis" label="Diagnosis" inputValue={patient ? patient.diagnosis : ""}/>
+        {error && <div className="text-center text-danger py-3">{error}</div>}
+        <div className="d-flex flex-column align-items-end pt-3">
             <button type="submit" className="btn btn-primary col-12 col-lg-4">Save informations</button>
+        </div>
+        <div className="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div className="d-flex">
+                <div className="toast-body">
+                    Hello, world! This is a toast message.
+                </div>
+                <button type="button" className="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
         </div>
     </form>
 }
