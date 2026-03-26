@@ -56,7 +56,13 @@ public class SecurityConfig {
     			.cors(Customizer.withDefaults())
     			.authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/sign-in").permitAll()
     														.requestMatchers("/api/patient").hasRole("Patient")
-    														.requestMatchers("/api/patients", "/api/patients/**", "/api/save-patient", "/api/parameters/**", "/api/parameter/**").hasRole("Staff")
+    														.requestMatchers(
+    																"/api/patients", 
+    																"/api/patients/**", 
+    																"/api/save-patient", 
+    																"/api/parameters/**", 
+    																"/api/parameter/**",
+    																"/api/entry/**").hasRole("Staff")
     														.anyRequest().authenticated()
     			).userDetailsService(userService)
 				.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
