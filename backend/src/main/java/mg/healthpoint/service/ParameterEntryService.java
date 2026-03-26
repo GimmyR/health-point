@@ -58,7 +58,7 @@ public class ParameterEntryService {
 		Parameter param = opt.get();
 		ParameterEntry entry = null;
 		
-		if(form.value() < param.getMin() || form.value() > param.getMax())
+		if((param.getMin() == null || form.value() < param.getMin()) || (param.getMax() == null || form.value() > param.getMax()))
 			throw new BadRequestException(String.format("Entry value should be between %f and %f", param.getMin(), param.getMax()));
 		
 		if(form.id() != null)
