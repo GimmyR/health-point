@@ -30,5 +30,19 @@ public class ParameterEntry {
 	private LocalDateTime entryDate;
 	
 	private Double value;
+	
+	// METHODS :
+
+	public void editParameter(Parameter parameter) {
+		this.parameter = parameter;
+	}
+
+	public void editEntryDate(LocalDateTime entryDate) {
+		this.entryDate = entryDate;
+	}
+
+	public void editValue(Double value) {
+		this.value = value;
+	}
 
 }
