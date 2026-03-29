@@ -26,7 +26,7 @@ INSERT INTO Staff (id, account_id, profession) VALUES (NEXTVAL('STAFF_SEQ'), 2, 
 
 /* PARAMETER */
 
-INSERT INTO Parameter (id, patient_id, name, unit) VALUES (NEXTVAL('PARAMETER_SEQ'), 1, 'Weight', 'kg');
+INSERT INTO Parameter (id, patient_id, name, unit, min, max) VALUES (NEXTVAL('PARAMETER_SEQ'), 1, 'Weight', 'kg', 35.0, 42.0);
 
 /* PARAMETER ENTRY */
 

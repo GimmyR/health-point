@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './components/Root.tsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.min.css';
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import './main.css';
 import SignIn from './components/SignIn.tsx';
 import PatientForStaff from './components/PatientForStaff.tsx';
@@ -12,6 +13,7 @@ import EditInfo from './components/EditInfo.tsx';
 import AddPatient from './components/AddPatient.tsx';
 import AddParameter from './components/AddParameter.tsx';
 import EditParameter from './components/EditParameter.tsx';
+import AddEntry from './components/AddEntry.tsx';
 
 const router = createBrowserRouter([
     {
@@ -32,10 +34,6 @@ const router = createBrowserRouter([
                 element: <EditInfo/>
             },
             {
-                path: "edit-entry/:id",
-                element: <EditEntry/>
-            },
-            {
                 path: "add-patient",
                 element: <AddPatient/>
             },
@@ -46,6 +44,14 @@ const router = createBrowserRouter([
             {
                 path: "edit-parameter",
                 element: <EditParameter/>
+            },
+            {
+                path: "entry/add/:patientId",
+                element: <AddEntry/>
+            },
+            {
+                path: "entry/edit/:id",
+                element: <EditEntry/>
             }
         ]
     }
