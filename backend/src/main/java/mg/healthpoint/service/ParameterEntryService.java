@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 
 import mg.healthpoint.exception.NotFoundException;
+import mg.healthpoint.dto.ParameterEntryResponse;
 import mg.healthpoint.dto.SaveEntryRequest;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.ParameterEntry;
@@ -77,6 +78,12 @@ public class ParameterEntryService {
 	public void delete(ParameterEntry parameterEntry) {
 		
 		parameterEntryRepository.delete(parameterEntry);
+		
+	}
+	
+	public ParameterEntryResponse mapToParameterEntryResponse(ParameterEntry entry) {
+		
+		return new ParameterEntryResponse(entry.getId(), entry.getParameter().getId(), entry.getEntryDate(), entry.getValue());
 		
 	}
 
