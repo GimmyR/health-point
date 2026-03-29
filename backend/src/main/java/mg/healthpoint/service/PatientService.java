@@ -108,7 +108,7 @@ public class PatientService {
 			List<ParameterEntryResponse> entries = new ArrayList<>();
 			
 			p.getDetails().forEach(d -> {
-				entries.add(new ParameterEntryResponse(d.getId(), d.getEntryDate(), d.getValue()));
+				entries.add(new ParameterEntryResponse(d.getId(), d.getId(), d.getEntryDate(), d.getValue()));
 			});
 			
 			parameters.add(new ParameterResponse(p.getId(), p.getName(), p.getUnit(), p.getMin(), p.getMax(), entries));
