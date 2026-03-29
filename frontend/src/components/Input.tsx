@@ -11,7 +11,7 @@ export default function Input({ type, id, label, inputValue } : Props) {
             <label htmlFor={id} className="form-label">{label}</label>
         </div>
         <div className="col-lg-9">
-            <input type={type} id={id} className="form-control text-secondary" name={id} defaultValue={inputValue}/>
+            <input type={type} id={id} className="form-control text-secondary" name={id} defaultValue={inputValue} step="any"/>
         </div>
     </div>
 }
