@@ -15,7 +15,7 @@ export default function AccountInfo({ isStaff, account } : Props) {
                 <span className="fw-bold">Gender :</span> {account.gender}
             </li>
             <li>
-                <span className="fw-bold">Date of birth :</span> {account.dateOfBirth}
+                <span className="fw-bold">Date of birth :</span> {new Date(account.dateOfBirth).toLocaleDateString()}
             </li>
             <li>
                 <span className="fw-bold">Address :</span> {account.address}
