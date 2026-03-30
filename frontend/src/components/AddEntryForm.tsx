@@ -7,10 +7,12 @@ import { useNavigate } from "react-router-dom";
 
 type Props = {
     patientId: number,
-    entry?: ParameterEntry
+    entry?: ParameterEntry,
+    datetime?: string,
+    parameterId?: number
 };
 
-export default function AddEntryForm({ patientId, entry } : Props) {
+export default function AddEntryForm({ patientId, entry, datetime = "", parameterId } : Props) {
     const navigate = useNavigate();
     const [error, setError] = useState<string>();
     const [patient, setPatient] = useState<IPatient>();
@@ -43,6 +45,7 @@ export default function AddEntryForm({ patientId, entry } : Props) {
     };
 
     useEffect(() => {
+        console.log(parameterId);
         if(patientId)
             fetch(`${BACKEND}/api/patients/${patientId}`, { 
                 headers: { 
@@ -55,14 +58,14 @@ export default function AddEntryForm({ patientId, entry } : Props) {
 
     return (
         <form className="pb-5" onSubmit={handleSubmit}>
-            <Input type="datetime-local" id="entry-date" label="Entry date" inputValue={entry ? entry.entryDate : ""}/>
+            <Input type="datetime-local" id="entry-date" label="Entry date" inputValue={entry ? entry.entryDate : datetime}/>
             <div className="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-3">
                 <div className="me-lg-4">
                     <label htmlFor="parameter" className="form-label">Parameter</label>
                 </div>
                 <div className="col-lg-9">
-                    <select id="parameter" className="form-select text-secondary" name="parameter" defaultValue={entry?.parameterId}>
-                        {patient?.parameters.map(parameter => <option key={parameter.id} value={parameter.id}>{parameter.name}</option>)}
+                    <select id="parameter" className="form-select text-secondary" name="parameter">
+                        {patient?.parameters.map(parameter => <option key={parameter.id} value={parameter.id} selected={parameter.id == entry?.parameterId || parameter.id == parameterId}>{parameter.name}</option>)}
                     </select>
                 </div>
             </div>

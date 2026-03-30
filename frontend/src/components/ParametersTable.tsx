@@ -15,6 +15,8 @@ export default function ParametersTable({ patientId, isStaff, dateTimes, paramet
         const entryId = findEntry(parameter, datetime)?.id;
         if(isStaff && entryId != undefined)
             navigate(`/entry/edit/${entryId}?patient=${patientId}`);
+        else if(isStaff && entryId == undefined)
+            navigate(`/entry/add/${patientId}?datetime=${datetime}&parameter=${parameter.id}`);
     };
 
     const editParameter = (parameterId: number) => {
