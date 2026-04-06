@@ -42,6 +42,6 @@ export default function ParametersTable({ patientId, isStaff, dateTimes, paramet
                 </tr>)}
             </tbody>
         </table>}
-        {parameters[0].entries.length == 0 && <div className="text-bg-secondary text-uppercase fw-bold text-center py-3">No data</div>}
+        {parameters.length > 0 && parameters[0].entries.length == 0 && <div className="text-bg-secondary text-uppercase fw-bold text-center py-3">No data</div>}
     </>
 }
