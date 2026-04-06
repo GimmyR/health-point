@@ -15,6 +15,7 @@ import AddParameter from './components/AddParameter.tsx';
 import EditParameter from './components/EditParameter.tsx';
 import AddEntry from './components/AddEntry.tsx';
 import RemovePatient from './components/RemovePatient.tsx';
+import RemoveParameter from './components/RemoveParameter.tsx';
 
 const router = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
             {
                 path: "edit-parameter",
                 element: <EditParameter/>
+            },
+            {
+                path: "parameter/remove/:id",
+                element: <RemoveParameter/>
             },
             {
                 path: "entry/add/:patientId",

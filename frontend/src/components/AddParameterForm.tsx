@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import type Parameter from "../interfaces/Parameter";
 import Input from "./Input";
 import { BACKEND } from "../lib/url";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 type Props = {
     patientId: number,
@@ -49,8 +49,9 @@ export default function AddParameterForm({ patientId, parameter } : Props) {
         <Input type="number" id="min" label="Min" inputValue={parameter ? parameter.min : ""}/>
         <Input type="number" id="max" label="Max" inputValue={parameter ? parameter.max : ""}/>
         {error && <div className="text-center text-danger py-3">{error}</div>}
-        <div className="d-flex flex-column align-items-end pt-3">
-            <button type="submit" className="btn btn-primary col-12 col-lg-4">Save parameter</button>
+        <div className="d-flex flex-column flex-lg-row justify-content-lg-end pt-3">
+            {parameter && <NavLink to={`/parameter/remove/${parameter.id}`} className="btn btn-danger col-12 col-lg-auto rounded-0 me-lg-2 mb-3 mb-lg-0">Remove</NavLink>}
+            <button type="submit" className="btn btn-primary col-12 col-lg-3 rounded-0">Submit</button>
         </div>
     </form>
 }
