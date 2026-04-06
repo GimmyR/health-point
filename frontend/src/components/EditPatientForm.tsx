@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import type IPatient from "../interfaces/IPatient";
 import Input from "./Input";
 import { BACKEND } from "../lib/url";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 type Props = {
     patient?: IPatient
@@ -67,8 +67,9 @@ export default function EditPatientForm({ patient } : Props) {
         <Input type="text" id="room" label="Room" inputValue={patient ? patient.room : ""}/>
         <Input type="text" id="diagnosis" label="Diagnosis" inputValue={patient ? patient.diagnosis : ""}/>
         {error && <div className="text-center text-danger py-3">{error}</div>}
-        <div className="d-flex flex-column align-items-end pt-3">
-            <button type="submit" className="btn btn-primary col-12 col-lg-4">Save informations</button>
+        <div className="d-flex flex-column flex-lg-row justify-content-lg-end pt-3">
+            {patient && <NavLink to={`/patient/remove/${patient.id}`} className="btn btn-danger col-12 col-lg-auto rounded-0 me-lg-2">Remove</NavLink>}
+            <button type="submit" className="btn btn-primary col-12 col-lg-3 rounded-0">Submit</button>
         </div>
         <div className="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
             <div className="d-flex">
