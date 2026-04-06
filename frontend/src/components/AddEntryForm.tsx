@@ -3,7 +3,7 @@ import type ParameterEntry from "../interfaces/ParameterEntry";
 import Input from "./Input";
 import type IPatient from "../interfaces/IPatient";
 import { BACKEND } from "../lib/url";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 type Props = {
     patientId: number,
@@ -71,8 +71,9 @@ export default function AddEntryForm({ patientId, entry, datetime = "", paramete
             </div>
             <Input type="number" id="value" label="Value" inputValue={entry ? entry.value : ""}/>
             {error && <div className="text-center text-danger py-3">{error}</div>}
-            <div className="d-flex flex-column align-items-end pt-3">
-                <button type="submit" className="btn btn-primary col-12 col-lg-4 rounded-0">Submit</button>
+            <div className="d-flex flex-column flex-lg-row justify-content-lg-end pt-3">
+                {entry && <NavLink to={`/entry/remove/${entry.id}`} className="btn btn-danger col-12 col-lg-auto rounded-0 me-lg-2 mb-3 mb-lg-0">Remove</NavLink>}
+                <button type="submit" className="btn btn-primary col-12 col-lg-3 rounded-0">Submit</button>
             </div>
         </form>
     );
