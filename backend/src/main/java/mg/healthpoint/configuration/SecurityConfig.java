@@ -57,6 +57,7 @@ public class SecurityConfig {
     			.authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/sign-in").permitAll()
     														.requestMatchers("/api/patient").hasRole("Patient")
     														.requestMatchers(
+    																"/api/patient/**",
     																"/api/patients", 
     																"/api/patients/**", 
     																"/api/save-patient", 

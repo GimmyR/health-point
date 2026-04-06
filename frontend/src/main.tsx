@@ -14,6 +14,9 @@ import AddPatient from './components/AddPatient.tsx';
 import AddParameter from './components/AddParameter.tsx';
 import EditParameter from './components/EditParameter.tsx';
 import AddEntry from './components/AddEntry.tsx';
+import RemovePatient from './components/RemovePatient.tsx';
+import RemoveParameter from './components/RemoveParameter.tsx';
+import RemoveEntry from './components/RemoveEntry.tsx';
 
 const router = createBrowserRouter([
     {
@@ -38,6 +41,10 @@ const router = createBrowserRouter([
                 element: <AddPatient/>
             },
             {
+                path: "patient/remove/:id",
+                element: <RemovePatient/>
+            },
+            {
                 path: "add-parameter/:patientId",
                 element: <AddParameter/>
             },
@@ -46,12 +53,20 @@ const router = createBrowserRouter([
                 element: <EditParameter/>
             },
             {
+                path: "parameter/remove/:id",
+                element: <RemoveParameter/>
+            },
+            {
                 path: "entry/add/:patientId",
                 element: <AddEntry/>
             },
             {
                 path: "entry/edit/:id",
                 element: <EditEntry/>
+            },
+            {
+                path: "entry/remove/:id",
+                element: <RemoveEntry/>
             }
         ]
     }

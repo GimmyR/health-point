@@ -39,5 +39,14 @@ public class ParameterRestController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(parameter.getId());
 		
 	}
+	
+	@PostMapping("/api/parameter/remove/{id}")
+	public ResponseEntity<Integer> removeParameter(@PathVariable Integer id) throws NotFoundException {
+		
+		Parameter parameter = this.parameterService.findUniqueWithEntriesById(id);
+		this.parameterService.delete(parameter);
+		return ResponseEntity.status(HttpStatus.CREATED).body(parameter.getPatient().getId());
+		
+	}
 
 }

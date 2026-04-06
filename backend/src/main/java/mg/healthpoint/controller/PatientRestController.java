@@ -2,7 +2,6 @@ package mg.healthpoint.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -79,6 +78,15 @@ public class PatientRestController {
 		
 		Patient patient = patientService.save(form);
 		return ResponseEntity.status(HttpStatus.CREATED).body(patient.getId());
+		
+	}
+	
+	@PostMapping("/api/patient/remove/{id}")
+	public ResponseEntity<Boolean> removePatient(@PathVariable Integer id) throws NotFoundException {
+		
+		Patient patient = patientService.findUniqueById(id);
+		patientService.delete(patient);
+		return ResponseEntity.status(HttpStatus.CREATED).body(true);
 		
 	}
 

@@ -43,6 +43,17 @@ public class ParameterService {
 		
 	}
 	
+	public Parameter findUniqueWithEntriesById(Integer id) throws NotFoundException {
+		
+		Optional<Parameter> opt = parameterRepository.findWithEntriesById(id);
+		
+		if(opt.isPresent())
+			return opt.get();
+		
+		else throw new NotFoundException("Parameter not found");
+		
+	}
+	
 	public Parameter save(SaveParameterRequest form) throws NotFoundException, BadRequestException {
 		
 		Optional<Patient> patient = patientRepository.findById(form.patientId());
