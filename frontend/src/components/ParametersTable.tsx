@@ -20,7 +20,8 @@ export default function ParametersTable({ patientId, isStaff, dateTimes, paramet
     };
 
     const editParameter = (parameterId: number) => {
-        navigate(`/edit-parameter?id=${parameterId}&patient=${patientId}`);
+        if(isStaff)
+            navigate(`/edit-parameter?id=${parameterId}&patient=${patientId}`);
     };
 
     const findEntry = (parameter: Parameter, datetime: string) => {

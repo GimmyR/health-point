@@ -3,35 +3,26 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { BACKEND } from "../lib/url";
 import AddEntryForm from "./AddEntryForm";
 import type ParameterEntry from "../interfaces/ParameterEntry";
+import useRole from "../hooks/useRole";
 
 export default function EditEntry() {
+    const { isStaff } = useRole();
     const { id } = useParams();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const [entry, setEntry] = useState<ParameterEntry | undefined>();
 
-    const isStaff = async () => {
-        await fetch(`${BACKEND}/api/is-staff`, { headers: { "Authorization": `Bearer ${localStorage.getItem("jwtoken")}` } })
-            .then(response => response.json())
-            .then(data => {
-                if(!data)
-                    navigate("/");
-            });
-    };
+    if(!isStaff)
+        navigate("/");
 
-    const fetchEntry = async () => {
-        await fetch(`${BACKEND}/api/entries/${id}`, {
+    useEffect(() => {
+        fetch(`${BACKEND}/api/entries/${id}`, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}`
             }
         }).then(response => response.json())
             .then(data => setEntry(data))
             .catch(error => console.log(error));
-    };
-
-    useEffect(() => {
-        isStaff();
-        fetchEntry();
     }, []);
 
     return (

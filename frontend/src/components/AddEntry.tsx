@@ -1,11 +1,17 @@
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import AddEntryForm from "./AddEntryForm";
+import useRole from "../hooks/useRole";
 
 export default function AddEntry() {
+    const { isStaff } = useRole();
     const { patientId } = useParams();
     const [searchParams] = useSearchParams();
     const datetime = searchParams.get("datetime") as string;
     const parameterId = parseInt(searchParams.get("parameter") as string);
+    const navigate = useNavigate();
+
+    if(!isStaff)
+        navigate("/");
 
     if(patientId)
         return (

@@ -3,30 +3,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BACKEND } from "../lib/url";
 import type IPatient from "../interfaces/IPatient";
 import EditPatientForm from "./EditPatientForm";
+import useRole from "../hooks/useRole";
 
 export default function EditInfo() {
     const {id} = useParams();
+    const { isStaff } = useRole();
     const navigate = useNavigate();
     const [patient, setPatient] = useState<IPatient | undefined>();
 
-    const checkIfIsStaff = async () => {
-        await fetch(`${BACKEND}/api/is-staff`, { headers: { "Authorization": `Bearer ${localStorage.getItem("jwtoken")}` } })
-            .then(response => response.json())
-            .then(data => {
-                if(!data)
-                    navigate("/");
-            });
-    };
-
-    const fetchPatientDetails = async () => {
-        await checkIfIsStaff();
-        await fetch(`${BACKEND}/api/patient-details/${id}`, { headers: { "Authorization": `Bearer ${localStorage.getItem("jwtoken")}` } })
-            .then(response => response.json())
-            .then(data => setPatient(data));
-    };
+    if(!isStaff)
+        navigate("/");
 
     useEffect(() => {
-        fetchPatientDetails();
+        fetch(`${BACKEND}/api/patient-details/${id}`, { headers: { "Authorization": `Bearer ${localStorage.getItem("jwtoken")}` } })
+            .then(response => response.json())
+            .then(data => setPatient(data));
     }, []);
 
     return <main className="container-fluid container-lg min-vh-100 px-4 pt-5 bg-light">

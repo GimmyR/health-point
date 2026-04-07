@@ -1,14 +1,20 @@
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import AddParameterForm from "./AddParameterForm";
 import { useEffect, useState } from "react";
 import type Parameter from "../interfaces/Parameter";
 import { BACKEND } from "../lib/url";
+import useRole from "../hooks/useRole";
 
 export default function EditParameter() {
+    const { isStaff } = useRole();
     const [searchParams] = useSearchParams();
     const parameterId = searchParams.get("id");
     const patientId = searchParams.get("patient");
     const [parameter, setParameter] = useState<Parameter>();
+    const navigate = useNavigate();
+
+    if(!isStaff)
+        navigate("/");
 
     useEffect(() => {
         fetch(`${BACKEND}/api/parameters/${parameterId}`, { headers: { "Authorization": `Bearer ${localStorage.getItem("jwtoken")}` } })
