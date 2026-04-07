@@ -1,23 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { BACKEND } from "../lib/url";
 import EditPatientForm from "./EditPatientForm";
-import { useEffect } from "react";
+import useRole from "../hooks/useRole";
 
 export default function AddPatient() {
+    const { isStaff } = useRole();
     const navigate = useNavigate();
 
-    const checkIfIsStaff = async () => {
-        await fetch(`${BACKEND}/api/is-staff`, { headers: { "Authorization": `Bearer ${localStorage.getItem("jwtoken")}` } })
-            .then(response => response.json())
-            .then(data => {
-                if(!data)
-                    navigate("/");
-            });
-    };
-
-    useEffect(() => {
-        checkIfIsStaff();
-    }, []);
+    if(!isStaff)
+        navigate("/");
 
     return <main className="container-fluid container-lg min-vh-100 px-4 pt-5 bg-light">
         <div className="pt-5 pb-3">

@@ -1,9 +1,14 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { BACKEND } from "../lib/url";
+import useRole from "../hooks/useRole";
 
 export default function RemoveEntry() {
+    const { isStaff } = useRole();
     const { id } = useParams();
     const navigate = useNavigate();
+
+    if(!isStaff)
+        navigate("/");
 
     const removeEntry = async () => {
         const res = await fetch(`${BACKEND}/api/entry/remove/${id}`, {

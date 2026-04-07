@@ -1,8 +1,14 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AddParameterForm from "./AddParameterForm";
+import useRole from "../hooks/useRole";
 
 export default function AddParameter() {
     const { patientId } = useParams();
+    const { isStaff } = useRole();
+    const navigate = useNavigate();
+
+    if(!isStaff)
+        navigate("/");
 
     if(patientId)
         return <main className="container-fluid container-lg min-vh-100 px-4 pt-5 bg-light">
