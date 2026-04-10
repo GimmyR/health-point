@@ -27,5 +27,15 @@ public class Staff {
 	private Account account;
 	
 	private String profession;
+	
+	// METHODS
+
+	public void editAccount(Account account) {
+		this.account = account;
+	}
+
+	public void editProfession(String profession) {
+		this.profession = profession;
+	}
 
 }
