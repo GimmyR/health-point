@@ -81,5 +81,10 @@ public class Account {
 	public void editContact(String contact) {
 		this.contact = contact;
 	}
+	
+	public void editRoles(List<Role> roles) {
+		this.roles.clear();
+		this.roles.addAll(roles);
+	}
 
 }
