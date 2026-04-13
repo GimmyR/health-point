@@ -18,9 +18,11 @@ import mg.healthpoint.dto.SavePatientRequest;
 import mg.healthpoint.entity.Account;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.Patient;
+import mg.healthpoint.entity.Role;
 import mg.healthpoint.repository.AccountRepository;
 import mg.healthpoint.repository.ParameterRepository;
 import mg.healthpoint.repository.PatientRepository;
+import mg.healthpoint.repository.RoleRepository;
 
 @Service
 @AllArgsConstructor
@@ -30,6 +32,7 @@ public class PatientService {
 	private PatientRepository patientRepository;
 	private ParameterRepository parameterRepository;
 	private AccountRepository accountRepository;
+	private RoleRepository roleRepository;
 	
 	public List<Patient> findAllWithAccount() {
 		
@@ -171,13 +174,16 @@ public class PatientService {
 	public Patient save(SavePatientRequest form) throws NotFoundException {
 		
 		Patient patient = null;
+		Optional<Role> opt = this.roleRepository.findById(1);
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(opt.get());
 		
 		if(form.id() != null)
-			patient = this.savePatient(form);
+			patient = this.savePatient(form, roles);
 			
 		else {
 			
-			Account account = this.saveAccount(form.account());
+			Account account = this.saveAccount(form.account(), roles);
 			patient = new Patient();
 			patient.editAccount(account);
 			patient.editRoom(form.room());
@@ -187,7 +193,7 @@ public class PatientService {
 		
 	}
 	
-	private Patient savePatient(SavePatientRequest form) throws NotFoundException {
+	private Patient savePatient(SavePatientRequest form, List<Role> roles) throws NotFoundException {
 		
 		Patient patient = this.findUniqueById(form.id());
 		patient.editRoom(form.room());
@@ -198,12 +204,13 @@ public class PatientService {
 		patient.getAccount().editDateOfBirth(form.account().dateOfBirth());
 		patient.getAccount().editAddress(form.account().address());
 		patient.getAccount().editContact(form.account().contact());
+		patient.getAccount().editRoles(roles);
 		
 		return patient;
 		
 	}
 	
-	private Account saveAccount(SaveAccountRequest form) {
+	private Account saveAccount(SaveAccountRequest form, List<Role> roles) {
 		
 		Account account = new Account();
 		account.editFirstname(form.firstname());
@@ -212,6 +219,7 @@ public class PatientService {
 		account.editDateOfBirth(form.dateOfBirth());
 		account.editAddress(form.address());
 		account.editContact(form.contact());
+		account.editRoles(roles);
 		
 		return this.accountRepository.save(account);
 		
