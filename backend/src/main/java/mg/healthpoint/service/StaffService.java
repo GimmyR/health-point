@@ -64,7 +64,7 @@ public class StaffService {
 		
 		Staff authenticated = this.findUniqueByAccountUsername(auth.getName());
 		
-		if(!authenticated.getProfession().equals("Admin"))
+		if(!authenticated.getAdmin())
 			throw new ForbiddenException("You are not allowed to do this");
 		
 		Staff staff = null;
@@ -78,7 +78,7 @@ public class StaffService {
 			Account account = this.accountService.save(form.account(), Arrays.asList(role));
 			staff = new Staff();
 			staff.editAccount(account);
-			staff.editProfession(form.profession());
+			staff.editAdmin(false);
 			
 		} return staffRepository.save(staff);
 		
@@ -87,7 +87,12 @@ public class StaffService {
 	private Staff saveStaff(SaveStaffRequest form) throws NotFoundException {
 		
 		Staff staff = this.findUniqueById(form.id());
-		staff.editProfession(form.profession());
+		
+		if(form.admin() == null)
+			staff.editAdmin(false);
+		
+		else staff.editAdmin(form.admin());
+		
 		staff.getAccount().editUsername(form.account().username());
 		staff.getAccount().editPassword(form.account().password());
 		staff.getAccount().editFirstname(form.account().firstname());
@@ -109,7 +114,7 @@ public class StaffService {
 	
 	public boolean adminExists() {
 		
-		Optional<Staff> opt = this.staffRepository.findByProfession("Admin");
+		Optional<Staff> opt = this.staffRepository.findByAdmin(true);
 		
 		return opt.isPresent();
 		
@@ -123,7 +128,7 @@ public class StaffService {
 		
 		Staff staff = new Staff();
 		staff.editAccount(account);
-		staff.editProfession("Admin");
+		staff.editAdmin(true);
 		staffRepository.save(staff);
 		
 	}

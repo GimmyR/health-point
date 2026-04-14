@@ -34,13 +34,13 @@ public class StaffServiceUnitTest {
 		
 		Role role = new Role(1, "Patient");
 		Account account = new Account(1, "johndoe", "pwdJohn", "John", "Doe", "Male", LocalDate.now(), "Itaosy", "033 72 209 28", Arrays.asList(role));
-		Staff staff = new Staff(1, account, "Doctor");
+		Staff staff = new Staff(1, account, false);
 		Optional<Staff> opt = Optional.of(staff);
 		when(staffRepository.findById(1)).thenReturn(opt);
 		
 		Staff st = staffService.findUniqueById(1);
 		assertNotNull(st);
-		assertEquals(staff.getProfession(), st.getProfession());
+		assertEquals(staff.getAdmin(), st.getAdmin());
 		
 	}
 

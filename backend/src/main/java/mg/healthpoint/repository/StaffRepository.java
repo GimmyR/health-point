@@ -17,6 +17,6 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 	@Query("select s from Staff s where s.account.username = :username")
 	Optional<Staff> findByAccountUsername(@Param("username") String username);
 	
-	Optional<Staff> findByProfession(String profession);
+	Optional<Staff> findByAdmin(Boolean admin);
 
 }

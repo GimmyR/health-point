@@ -9,6 +9,6 @@ public record SaveStaffRequest(
 	@NotNull(message = "Account is missing")
 	SaveAccountRequest account,
 	
-	@NotEmpty(message = "Profession is missing")
-	String profession
+	@NotEmpty(message = "Admin is missing")
+	Boolean admin
 ) {}

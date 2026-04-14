@@ -26,7 +26,7 @@ public class Staff {
 	@JoinColumn(nullable = false)
 	private Account account;
 	
-	private String profession;
+	private Boolean admin;
 	
 	// METHODS
 
@@ -34,8 +34,8 @@ public class Staff {
 		this.account = account;
 	}
 
-	public void editProfession(String profession) {
-		this.profession = profession;
+	public void editAdmin(Boolean admin) {
+		this.admin = admin;
 	}
 
 }

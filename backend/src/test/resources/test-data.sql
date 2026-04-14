@@ -22,7 +22,7 @@ INSERT INTO Patient (id, account_id, room, diagnosis) VALUES (NEXTVAL('PATIENT_S
 
 /* STAFF */
 
-INSERT INTO Staff (id, account_id, profession) VALUES (NEXTVAL('STAFF_SEQ'), 2, 'Doctor');
+INSERT INTO Staff (id, account_id, admin) VALUES (NEXTVAL('STAFF_SEQ'), 2, false);
 
 /* PARAMETER */
 
