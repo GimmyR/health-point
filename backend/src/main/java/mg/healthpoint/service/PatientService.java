@@ -174,14 +174,15 @@ public class PatientService {
 	public Patient save(SavePatientRequest form) throws NotFoundException {
 		
 		Patient patient = null;
-		Optional<Role> opt = this.roleRepository.findById(1);
-		List<Role> roles = new ArrayList<Role>();
-		roles.add(opt.get());
 		
 		if(form.id() != null)
-			patient = this.savePatient(form, roles);
+			patient = this.savePatient(form);
 			
 		else {
+			
+			Optional<Role> opt = this.roleRepository.findById(1);
+			List<Role> roles = new ArrayList<Role>();
+			roles.add(opt.get());
 			
 			Account account = this.saveAccount(form.account(), roles);
 			patient = new Patient();
@@ -193,7 +194,7 @@ public class PatientService {
 		
 	}
 	
-	private Patient savePatient(SavePatientRequest form, List<Role> roles) throws NotFoundException {
+	private Patient savePatient(SavePatientRequest form) throws NotFoundException {
 		
 		Patient patient = this.findUniqueById(form.id());
 		patient.editRoom(form.room());
@@ -204,7 +205,6 @@ public class PatientService {
 		patient.getAccount().editDateOfBirth(form.account().dateOfBirth());
 		patient.getAccount().editAddress(form.account().address());
 		patient.getAccount().editContact(form.account().contact());
-		patient.getAccount().editRoles(roles);
 		
 		return patient;
 		
