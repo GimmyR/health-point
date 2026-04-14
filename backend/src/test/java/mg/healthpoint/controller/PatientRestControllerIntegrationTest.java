@@ -79,7 +79,7 @@ public class PatientRestControllerIntegrationTest {
 				.content(objectMapper.writeValueAsBytes(new SavePatientRequest(
 						1, "25B", "Nephrotic Syndrome", 
 						new SaveAccountRequest(
-								"John", "Doe", "Male", 
+								"johndoe", "pwdJohn","John", "Doe", "Male", 
 								LocalDate.of(1996, 11, 11), 
 								"Itaosy Cité Akany Sambatra Lot B29, Antananarivo, Analamanga, Madagascar",
 								"033 62 667 74 / johndoe@example.com")))))
