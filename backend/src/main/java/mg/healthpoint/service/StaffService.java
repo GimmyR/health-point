@@ -1,6 +1,6 @@
 package mg.healthpoint.service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.security.core.Authentication;
@@ -14,10 +14,7 @@ import mg.healthpoint.dto.SaveStaffRequest;
 import mg.healthpoint.entity.Account;
 import mg.healthpoint.entity.Role;
 import mg.healthpoint.entity.Staff;
-import mg.healthpoint.repository.AccountRepository;
-import mg.healthpoint.repository.RoleRepository;
 import mg.healthpoint.repository.StaffRepository;
-
 
 @Service
 @AllArgsConstructor
@@ -25,8 +22,8 @@ import mg.healthpoint.repository.StaffRepository;
 public class StaffService {
 	
 	private StaffRepository staffRepository;
-	private AccountRepository accountRepository;
-	private RoleRepository roleRepository;
+	private AccountService accountService;
+	private RoleService roleService;
 	
 	public List<Staff> findAll() {
 		
@@ -77,11 +74,8 @@ public class StaffService {
 		
 		else {
 			
-			Optional<Role> opt = this.roleRepository.findById(2);
-			List<Role> roles = new ArrayList<Role>();
-			roles.add(opt.get());
-			
-			Account account = this.saveAccount(form.account(), roles);
+			Role role = this.roleService.findUniqueByName("Staff");
+			Account account = this.accountService.save(form.account(), Arrays.asList(role));
 			staff = new Staff();
 			staff.editAccount(account);
 			staff.editProfession(form.profession());
@@ -94,6 +88,8 @@ public class StaffService {
 		
 		Staff staff = this.findUniqueById(form.id());
 		staff.editProfession(form.profession());
+		staff.getAccount().editUsername(form.account().username());
+		staff.getAccount().editPassword(form.account().password());
 		staff.getAccount().editFirstname(form.account().firstname());
 		staff.getAccount().editLastname(form.account().lastname());
 		staff.getAccount().editGender(form.account().gender());
@@ -102,21 +98,6 @@ public class StaffService {
 		staff.getAccount().editContact(form.account().contact());
 		
 		return staff;
-		
-	}
-	
-	private Account saveAccount(SaveAccountRequest form, List<Role> roles) {
-		
-		Account account = new Account();
-		account.editFirstname(form.firstname());
-		account.editLastname(form.lastname());
-		account.editGender(form.gender());
-		account.editDateOfBirth(form.dateOfBirth());
-		account.editAddress(form.address());
-		account.editContact(form.contact());
-		account.editRoles(roles);
-		
-		return this.accountRepository.save(account);
 		
 	}
 	
@@ -134,17 +115,11 @@ public class StaffService {
 		
 	}
 	
-	public void saveAdmin(String username, String password) {
+	public void saveAdmin(String username, String password) throws NotFoundException {
 		
-		Optional<Role> opt = this.roleRepository.findById(2);
-		List<Role> roles = new ArrayList<Role>();
-		roles.add(opt.get());
-		
-		Account account = new Account();
-		account.editUsername(username);
-		account.editPassword(password);
-		account.editRoles(roles);
-		account = accountRepository.save(account);
+		Role role = this.roleService.findUniqueByName("Staff");
+		SaveAccountRequest form = new SaveAccountRequest(username, password, null, null, null, null, null, null);
+		Account account = accountService.save(form, Arrays.asList(role));
 		
 		Staff staff = new Staff();
 		staff.editAccount(account);

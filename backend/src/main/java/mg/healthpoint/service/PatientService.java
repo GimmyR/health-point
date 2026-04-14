@@ -2,6 +2,7 @@ package mg.healthpoint.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -13,16 +14,13 @@ import mg.healthpoint.dto.ParameterEntryResponse;
 import mg.healthpoint.dto.ParameterResponse;
 import mg.healthpoint.dto.PatientItemResponse;
 import mg.healthpoint.dto.PatientResponse;
-import mg.healthpoint.dto.SaveAccountRequest;
 import mg.healthpoint.dto.SavePatientRequest;
 import mg.healthpoint.entity.Account;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.Patient;
 import mg.healthpoint.entity.Role;
-import mg.healthpoint.repository.AccountRepository;
 import mg.healthpoint.repository.ParameterRepository;
 import mg.healthpoint.repository.PatientRepository;
-import mg.healthpoint.repository.RoleRepository;
 
 @Service
 @AllArgsConstructor
@@ -31,8 +29,8 @@ public class PatientService {
 	
 	private PatientRepository patientRepository;
 	private ParameterRepository parameterRepository;
-	private AccountRepository accountRepository;
-	private RoleRepository roleRepository;
+	private AccountService accountService;
+	private RoleService roleService;
 	
 	public List<Patient> findAllWithAccount() {
 		
@@ -180,11 +178,8 @@ public class PatientService {
 			
 		else {
 			
-			Optional<Role> opt = this.roleRepository.findById(1);
-			List<Role> roles = new ArrayList<Role>();
-			roles.add(opt.get());
-			
-			Account account = this.saveAccount(form.account(), roles);
+			Role role = this.roleService.findUniqueByName("Patient");
+			Account account = this.accountService.save(form.account(), Arrays.asList(role));
 			patient = new Patient();
 			patient.editAccount(account);
 			patient.editRoom(form.room());
@@ -210,25 +205,10 @@ public class PatientService {
 		
 	}
 	
-	private Account saveAccount(SaveAccountRequest form, List<Role> roles) {
-		
-		Account account = new Account();
-		account.editFirstname(form.firstname());
-		account.editLastname(form.lastname());
-		account.editGender(form.gender());
-		account.editDateOfBirth(form.dateOfBirth());
-		account.editAddress(form.address());
-		account.editContact(form.contact());
-		account.editRoles(roles);
-		
-		return this.accountRepository.save(account);
-		
-	}
-	
 	public void delete(Patient patient) {
 		
 		patientRepository.delete(patient);
-		accountRepository.delete(patient.getAccount());
+		accountService.remove(patient.getAccount());
 		
 	}
 
