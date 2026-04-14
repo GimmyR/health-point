@@ -21,6 +21,8 @@ export default function EditPatientForm({ patient } : Props) {
             room: formData.get("room") as string,
             diagnosis: formData.get("diagnosis") as string,
             account: {
+                username: formData.get("username") as string,
+                password: formData.get("password") as string,
                 firstname: formData.get("firstname") as string,
                 lastname: formData.get("lastname") as string,
                 gender: formData.get("gender") as string,
@@ -49,6 +51,8 @@ export default function EditPatientForm({ patient } : Props) {
     };
 
     return <form onSubmit={handleSubmit}>
+        <Input type="text" id="username" label="Username" inputValue={patient ? patient.account.username : ""}/>
+        <Input type="text" id="password" label="Password" inputValue={patient ? patient.account.password : ""}/>
         <Input type="text" id="firstname" label="Firstname" inputValue={patient ? patient.account.firstname : ""}/>
         <Input type="text" id="lastname" label="Lastname" inputValue={patient ? patient.account.lastname : ""}/>
         <div className="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-3">
