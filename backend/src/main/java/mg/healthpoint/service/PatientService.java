@@ -120,6 +120,8 @@ public class PatientService {
 				patient.getRoom(),
 				patient.getDiagnosis(),
 				new AccountResponse(
+						patient.getAccount().getUsername(),
+						patient.getAccount().getPassword(),
 						patient.getAccount().getFirstname(),
 						patient.getAccount().getLastname(),
 						patient.getAccount().getGender(),
@@ -157,6 +159,8 @@ public class PatientService {
 				patient.getRoom(),
 				patient.getDiagnosis(),
 				new AccountResponse(
+						patient.getAccount().getUsername(),
+						patient.getAccount().getPassword(),
 						patient.getAccount().getFirstname(),
 						patient.getAccount().getLastname(),
 						patient.getAccount().getGender(),
