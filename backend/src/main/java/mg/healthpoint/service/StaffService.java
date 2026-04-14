@@ -71,14 +71,15 @@ public class StaffService {
 			throw new ForbiddenException("You are not allowed to do this");
 		
 		Staff staff = null;
-		Optional<Role> opt = this.roleRepository.findById(2);
-		List<Role> roles = new ArrayList<Role>();
-		roles.add(opt.get());
 		
 		if(form.id() != null)
-			staff = this.saveStaff(form, roles);
+			staff = this.saveStaff(form);
 		
 		else {
+			
+			Optional<Role> opt = this.roleRepository.findById(2);
+			List<Role> roles = new ArrayList<Role>();
+			roles.add(opt.get());
 			
 			Account account = this.saveAccount(form.account(), roles);
 			staff = new Staff();
@@ -89,7 +90,7 @@ public class StaffService {
 		
 	}
 	
-	private Staff saveStaff(SaveStaffRequest form, List<Role> roles) throws NotFoundException {
+	private Staff saveStaff(SaveStaffRequest form) throws NotFoundException {
 		
 		Staff staff = this.findUniqueById(form.id());
 		staff.editProfession(form.profession());
@@ -99,7 +100,6 @@ public class StaffService {
 		staff.getAccount().editDateOfBirth(form.account().dateOfBirth());
 		staff.getAccount().editAddress(form.account().address());
 		staff.getAccount().editContact(form.account().contact());
-		staff.getAccount().editRoles(roles);
 		
 		return staff;
 		
