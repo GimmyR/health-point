@@ -6,7 +6,7 @@ export default function AddStaff() {
     const { isPatient, isStaff, isAdmin } = useRole();
     const navigate = useNavigate();
 
-    if(isPatient || (isStaff && !isAdmin))
+    if(isPatient != undefined && isStaff != undefined && isAdmin != undefined && !isAdmin)
         navigate("/");
 
     return <main className="container-fluid container-lg min-vh-100 px-4 pt-5 bg-light">
