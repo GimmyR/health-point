@@ -44,7 +44,7 @@ public class Account {
 	
 	private String contact;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable
 	private List<Role> roles = new ArrayList<Role>();
 	
