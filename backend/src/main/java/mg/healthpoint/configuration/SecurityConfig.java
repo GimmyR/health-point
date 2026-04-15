@@ -64,7 +64,8 @@ public class SecurityConfig {
     																"/api/parameters/**", 
     																"/api/parameter/**",
     																"/api/entry/**",
-    																"/api/staff/**").hasRole("Staff")
+    																"/api/staff/**",
+    																"/api/account/**").hasRole("Staff")
     														.anyRequest().authenticated()
     			).userDetailsService(userService)
 				.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));

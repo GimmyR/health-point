@@ -62,11 +62,7 @@ public class StaffService {
 	
 	public Staff save(Authentication auth, SaveStaffRequest form) throws NotFoundException, ForbiddenException {
 		
-		Staff authenticated = this.findUniqueByAccountUsername(auth.getName());
-		
-		if(!authenticated.getAdmin())
-			throw new ForbiddenException("You are not allowed to do this");
-		
+		this.checkAdmin(auth);
 		Staff staff = null;
 		
 		if(form.id() != null)
@@ -81,6 +77,15 @@ public class StaffService {
 			staff.editAdmin(false);
 			
 		} return staffRepository.save(staff);
+		
+	}
+	
+	private void checkAdmin(Authentication auth) throws NotFoundException, ForbiddenException {
+		
+		Staff authenticated = this.findUniqueByAccountUsername(auth.getName());
+		
+		if(!authenticated.getAdmin())
+			throw new ForbiddenException("You are not allowed to do this");
 		
 	}
 	
@@ -130,6 +135,13 @@ public class StaffService {
 		staff.editAccount(account);
 		staff.editAdmin(true);
 		staffRepository.save(staff);
+		
+	}
+	
+	public List<Account> findAllAccountsWithRoles(Authentication auth) throws NotFoundException, ForbiddenException {
+		
+		this.checkAdmin(auth);
+		return this.accountService.findAllWithRoles();
 		
 	}
 

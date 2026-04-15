@@ -79,5 +79,11 @@ public class AccountService {
 		return this.accountRepository.save(account);
 		
 	}
+	
+	public List<Account> findAllWithRoles() {
+		
+		return this.accountRepository.findAllWithRoles();
+		
+	}
 
 }
