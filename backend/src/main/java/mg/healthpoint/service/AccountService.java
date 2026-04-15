@@ -80,9 +80,9 @@ public class AccountService {
 		
 	}
 	
-	public List<Account> findAllWithRoles() {
+	public List<Account> findAllWithRolesWithoutAdmin() {
 		
-		return this.accountRepository.findAllWithRoles();
+		return this.accountRepository.findAllWithRolesWithoutAdmin();
 		
 	}
 

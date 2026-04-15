@@ -138,10 +138,10 @@ public class StaffService {
 		
 	}
 	
-	public List<Account> findAllAccountsWithRoles(Authentication auth) throws NotFoundException, ForbiddenException {
+	public List<Account> findAllAccountsWithRolesWithoutAdmin(Authentication auth) throws NotFoundException, ForbiddenException {
 		
 		this.checkAdmin(auth);
-		return this.accountService.findAllWithRoles();
+		return this.accountService.findAllWithRolesWithoutAdmin();
 		
 	}
 

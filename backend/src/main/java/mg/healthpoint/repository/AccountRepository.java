@@ -15,7 +15,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 	@Query("select a from Account a left join fetch a.roles where a.username = :username")
 	Account findWithRolesByUsername(@Param("username") String username);
 	
-	@Query("select a from Account a left join fetch a.roles")
-	List<Account> findAllWithRoles();
+	@Query("select a from Account a left join fetch a.roles where a.id not in (select s.account.id from Staff s where s.admin = true)")
+	List<Account> findAllWithRolesWithoutAdmin();
 
 }
