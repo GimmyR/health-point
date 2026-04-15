@@ -111,9 +111,11 @@ public class StaffService {
 		
 	}
 	
-	public void delete(Staff staff) {
+	public void delete(Authentication auth, Staff staff) throws NotFoundException, ForbiddenException {
 		
+		this.checkAdmin(auth);
 		staffRepository.delete(staff);
+		accountService.remove(staff.getAccount());
 		
 	}
 	
