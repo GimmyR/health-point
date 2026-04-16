@@ -1,35 +1,35 @@
 import { NavLink } from "react-router-dom";
-import type { IAccount } from "../interfaces/IAccount";
 import { useEffect, useState } from "react";
 import { BACKEND } from "../lib/url";
-import AccountsTable from "./AccountsTable";
+import StaffsTable from "./StaffsTable";
+import type { IStaffItem } from "../interfaces/IStaffItem";
 
 export default function Admin() {
-    const [accounts, setAccounts] = useState<IAccount[]>([]);
+    const [staffs, setStaffs] = useState<IStaffItem[]>([]);
     
-    const fetchAccounts = async () => {
-        await fetch(`${BACKEND}/api/account/all`, { headers: { "Authorization": `Bearer ${localStorage.getItem("jwtoken")}` } })
+    const fetchStaffs = async () => {
+        await fetch(`${BACKEND}/api/staffs`, { headers: { "Authorization": `Bearer ${localStorage.getItem("jwtoken")}` } })
                 .then(response => response.json())
-                .then(data => setAccounts(data))
+                .then(data => setStaffs(data))
                 .catch(error => console.log(error));
     };
 
     useEffect(() => {
-        fetchAccounts();
+        fetchStaffs();
     }, []);
 
     return <>
         <main className="container-fluid container-lg min-vh-100 px-4 pt-5 bg-light">
             <div className="pt-5 pb-3">
                 <div className="d-flex flex-column align-items-center">
-                    <h1 className="text-decoration-underline fs-4 mt-lg-5">List of accounts</h1>
+                    <h1 className="text-decoration-underline fs-4 mt-lg-5">List of staffs</h1>
                     <form className="my-4 my-lg-5">
                         <div className="mb-3">
                             <input type="text" className="form-control bg-light border-0 border-bottom" placeholder="Search"/>
                         </div>
                     </form>
                     <div className="col-12 col-lg-6">
-                        {accounts.length > 0 && <AccountsTable accounts={accounts}/>}
+                        {staffs.length > 0 && <StaffsTable staffs={staffs}/>}
                     </div>
                 </div>
             </div>
