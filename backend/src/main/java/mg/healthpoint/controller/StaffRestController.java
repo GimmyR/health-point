@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import mg.healthpoint.dto.FindAllAccountsResponse;
+import mg.healthpoint.dto.FindAllStaffsResponse;
 import mg.healthpoint.dto.SaveStaffRequest;
-import mg.healthpoint.entity.Account;
 import mg.healthpoint.entity.Staff;
 import mg.healthpoint.exception.ForbiddenException;
 import mg.healthpoint.exception.NotFoundException;
@@ -41,19 +40,18 @@ public class StaffRestController {
 		
 	}
 	
-	@GetMapping("/api/account/all")
-	public ResponseEntity<List<FindAllAccountsResponse>> findAllAccounts(Authentication auth) throws NotFoundException, ForbiddenException {
+	@GetMapping("/api/staffs")
+	public ResponseEntity<List<FindAllStaffsResponse>> findAllStaffs(Authentication auth) throws NotFoundException, ForbiddenException {
 		
-		List<Account> accounts = this.staffService.findAllAccountsWithRolesWithoutAdmin(auth);
+		List<Staff> staffs = this.staffService.findAllWithAccountWithoutAdmin(auth);
 		
-		return ResponseEntity.ok(accounts.stream().map(acc -> new FindAllAccountsResponse(
-				acc.getId(), 
-				acc.getFirstname(), 
-				acc.getLastname(), 
-				acc.getGender(), 
-				acc.getRoles())
-			).toList()
-		);
+		return ResponseEntity.ok(staffs.stream().map(staff -> new FindAllStaffsResponse(
+			staff.getId(),
+			staff.getAccount().getUsername(),
+			staff.getAccount().getFirstname(), 
+			staff.getAccount().getLastname(), 
+			staff.getAccount().getGender()
+		)).toList());
 		
 	}
 	

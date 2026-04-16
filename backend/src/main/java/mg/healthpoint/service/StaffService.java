@@ -25,9 +25,10 @@ public class StaffService {
 	private AccountService accountService;
 	private RoleService roleService;
 	
-	public List<Staff> findAll() {
+	public List<Staff> findAllWithAccountWithoutAdmin(Authentication auth) throws NotFoundException, ForbiddenException {
 		
-		return staffRepository.findAll();
+		this.checkAdmin(auth);
+		return staffRepository.findAllWithAccountWithoutAdmin();
 		
 	}
 	

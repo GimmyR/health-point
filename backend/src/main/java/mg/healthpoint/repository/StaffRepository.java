@@ -1,5 +1,6 @@
 package mg.healthpoint.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,9 @@ import mg.healthpoint.entity.Staff;
 
 @Repository
 public interface StaffRepository extends JpaRepository<Staff, Integer> {
+	
+	@Query("select s from Staff s join fetch s.account where s.admin = false")
+	List<Staff> findAllWithAccountWithoutAdmin();
 	
 	Optional<Staff> findByAccountId(Integer id);
 	
