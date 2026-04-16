@@ -19,6 +19,7 @@ import RemoveParameter from './components/RemoveParameter.tsx';
 import RemoveEntry from './components/RemoveEntry.tsx';
 import AddStaff from './components/AddStaff.tsx';
 import RemoveStaff from './components/RemoveStaff.tsx';
+import EditStaff from './components/EditStaff.tsx';
 
 const router = createBrowserRouter([
     {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
             {
                 path: "staff/add",
                 element: <AddStaff/>
+            },
+            {
+                path: "staff/edit/:id",
+                element: <EditStaff/>
             },
             {
                 path: "staff/remove/:id",

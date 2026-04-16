@@ -16,6 +16,9 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 	@Query("select s from Staff s join fetch s.account where s.admin = false")
 	List<Staff> findAllWithAccountWithoutAdmin();
 	
+	@Query("select s from Staff s join fetch s.account where s.id = :id")
+	Optional<Staff> findByIdWithAccount(@Param("id") Integer id);
+	
 	Optional<Staff> findByAccountId(Integer id);
 	
 	@Query("select s from Staff s where s.account.username = :username")

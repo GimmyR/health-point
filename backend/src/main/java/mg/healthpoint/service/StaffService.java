@@ -43,6 +43,18 @@ public class StaffService {
 		
 	}
 	
+	public Staff findUniqueByIdWithAccount(Authentication auth, Integer id) throws NotFoundException, ForbiddenException {
+		
+		this.checkAdmin(auth);
+		Optional<Staff> opt = staffRepository.findByIdWithAccount(id);
+		
+		if(opt.isPresent())
+			return opt.get();
+		
+		else throw new NotFoundException("Staff not found");
+		
+	}
+	
 	public Staff findUniqueByAccountUsername(String username) throws NotFoundException {
 		
 		Optional<Staff> opt = staffRepository.findByAccountUsername(username);

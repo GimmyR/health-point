@@ -65,7 +65,7 @@ public class SecurityConfig {
     																"/api/parameter/**",
     																"/api/entry/**",
     																"/api/staff/**",
-    																"/api/account/**",
+    																"/api/staffs/**",
     																"/api/is-admin").hasRole("Staff")
     														.anyRequest().authenticated()
     			).userDetailsService(userService)

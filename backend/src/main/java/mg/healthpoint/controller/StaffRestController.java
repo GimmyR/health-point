@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import mg.healthpoint.dto.FindAllStaffsResponse;
+import mg.healthpoint.dto.SaveAccountRequest;
 import mg.healthpoint.dto.SaveStaffRequest;
 import mg.healthpoint.entity.Staff;
 import mg.healthpoint.exception.ForbiddenException;
@@ -52,6 +53,29 @@ public class StaffRestController {
 			staff.getAccount().getLastname(), 
 			staff.getAccount().getGender()
 		)).toList());
+		
+	}
+	
+	@GetMapping("/api/staffs/{id}")
+	public ResponseEntity<SaveStaffRequest> findUniqueStaff(Authentication auth, @PathVariable Integer id) throws NotFoundException, ForbiddenException {
+		
+		Staff staff = this.staffService.findUniqueByIdWithAccount(auth, id);
+		SaveStaffRequest result = new SaveStaffRequest(
+			staff.getId(), 
+			new SaveAccountRequest(
+				staff.getAccount().getUsername(), 
+				null, 
+				staff.getAccount().getFirstname(), 
+				staff.getAccount().getLastname(), 
+				staff.getAccount().getGender(), 
+				staff.getAccount().getDateOfBirth(), 
+				staff.getAccount().getAddress(), 
+				staff.getAccount().getContact()
+			), 
+			null
+		);
+		
+		return ResponseEntity.ok(result);
 		
 	}
 	
