@@ -1,6 +1,8 @@
 package mg.healthpoint.controller;
 
 import java.util.List;
+
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -34,7 +36,7 @@ public class StaffRestController {
 	}
 	
 	@PostMapping("/api/staff/save")
-	public ResponseEntity<Integer> saveStaff(Authentication auth, @Valid @RequestBody SaveStaffRequest form) throws NotFoundException, ForbiddenException {
+	public ResponseEntity<Integer> saveStaff(Authentication auth, @Valid @RequestBody SaveStaffRequest form) throws NotFoundException, ForbiddenException, BadRequestException {
 		
 		Staff staff = this.staffService.save(auth, form);
 		return ResponseEntity.status(HttpStatus.CREATED).body(staff.getId());

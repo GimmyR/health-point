@@ -2,6 +2,8 @@ package mg.healthpoint.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -74,7 +76,7 @@ public class PatientRestController {
 	}
 	
 	@PostMapping("/api/save-patient")
-	public ResponseEntity<Integer> savePatient(@Valid @RequestBody SavePatientRequest form) throws NotFoundException {
+	public ResponseEntity<Integer> savePatient(@Valid @RequestBody SavePatientRequest form) throws NotFoundException, BadRequestException {
 		
 		Patient patient = patientService.save(form);
 		return ResponseEntity.status(HttpStatus.CREATED).body(patient.getId());

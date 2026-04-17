@@ -3,6 +3,7 @@ package mg.healthpoint.service;
 import java.time.Instant;
 import java.util.List;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -61,7 +62,10 @@ public class AccountService {
 		
 	}
 	
-	public Account save(SaveAccountRequest form, List<Role> roles) {
+	public Account save(SaveAccountRequest form, List<Role> roles) throws BadRequestException {
+		
+		if(form.password() == null || form.password().isBlank())
+			throw new BadRequestException("Password is missing");
 		
 		Account account = new Account();
 		account.editUsername(form.username());

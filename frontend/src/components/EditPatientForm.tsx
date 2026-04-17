@@ -52,7 +52,7 @@ export default function EditPatientForm({ patient } : Props) {
 
     return <form onSubmit={handleSubmit}>
         <Input type="text" id="username" label="Username" inputValue={patient ? patient.account.username : ""}/>
-        <Input type="text" id="password" label="Password" inputValue={patient ? patient.account.password : ""}/>
+        {!patient && <Input type="text" id="password" label="Password" inputValue=""/>}
         <Input type="text" id="firstname" label="Firstname" inputValue={patient ? patient.account.firstname : ""}/>
         <Input type="text" id="lastname" label="Lastname" inputValue={patient ? patient.account.lastname : ""}/>
         <div className="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-3">

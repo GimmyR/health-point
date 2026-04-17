@@ -50,7 +50,7 @@ export default function AddStaffForm({ staff } : Props) {
 
     return <form onSubmit={handleSubmit}>
         <Input type="text" id="username" label="Username" inputValue={staff ? staff.account.username : ""}/>
-        <Input type="text" id="password" label="Password" inputValue={staff ? staff.account.password : ""}/>
+        {!staff && <Input type="text" id="password" label="Password" inputValue=""/>}
         <Input type="text" id="firstname" label="Firstname" inputValue={staff ? staff.account.firstname : ""}/>
         <Input type="text" id="lastname" label="Lastname" inputValue={staff ? staff.account.lastname : ""}/>
         <div className="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-3">

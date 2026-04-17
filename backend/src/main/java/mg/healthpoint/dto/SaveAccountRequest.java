@@ -9,7 +9,6 @@ public record SaveAccountRequest(
 		@NotBlank(message = "Username is missing")
 		String username,
 		
-		@NotBlank(message = "Password is missing")
 		String password,
 		
 		@NotBlank(message = "Firstname is missing")

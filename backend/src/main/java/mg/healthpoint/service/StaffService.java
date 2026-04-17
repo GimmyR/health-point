@@ -3,6 +3,8 @@ package mg.healthpoint.service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import org.apache.coyote.BadRequestException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,7 +75,7 @@ public class StaffService {
 		
 	}
 	
-	public Staff save(Authentication auth, SaveStaffRequest form) throws NotFoundException, ForbiddenException {
+	public Staff save(Authentication auth, SaveStaffRequest form) throws NotFoundException, ForbiddenException, BadRequestException {
 		
 		this.checkAdmin(auth);
 		Staff staff = null;
@@ -112,7 +114,6 @@ public class StaffService {
 		else staff.editAdmin(form.admin());
 		
 		staff.getAccount().editUsername(form.account().username());
-		staff.getAccount().editPassword(form.account().password());
 		staff.getAccount().editFirstname(form.account().firstname());
 		staff.getAccount().editLastname(form.account().lastname());
 		staff.getAccount().editGender(form.account().gender());
@@ -140,7 +141,7 @@ public class StaffService {
 		
 	}
 	
-	public void saveAdmin(String username, String password) throws NotFoundException {
+	public void saveAdmin(String username, String password) throws NotFoundException, BadRequestException {
 		
 		Role role = this.roleService.findUniqueByName("Staff");
 		SaveAccountRequest form = new SaveAccountRequest(username, password, null, null, null, null, null, null);

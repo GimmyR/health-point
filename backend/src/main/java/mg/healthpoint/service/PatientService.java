@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
@@ -173,7 +175,7 @@ public class PatientService {
 		
 	}
 	
-	public Patient save(SavePatientRequest form) throws NotFoundException {
+	public Patient save(SavePatientRequest form) throws NotFoundException, BadRequestException {
 		
 		Patient patient = null;
 		
@@ -198,6 +200,7 @@ public class PatientService {
 		Patient patient = this.findUniqueById(form.id());
 		patient.editRoom(form.room());
 		patient.editDiagnosis(form.diagnosis());
+		patient.getAccount().editUsername(form.account().username());
 		patient.getAccount().editFirstname(form.account().firstname());
 		patient.getAccount().editLastname(form.account().lastname());
 		patient.getAccount().editGender(form.account().gender());
