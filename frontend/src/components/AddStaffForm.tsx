@@ -1,25 +1,23 @@
 import { useState, type FormEvent } from "react";
-import type IPatient from "../interfaces/IPatient";
 import Input from "./Input";
 import { BACKEND } from "../lib/url";
 import { NavLink, useNavigate } from "react-router-dom";
+import type { IStaff } from "../interfaces/IStaff";
 
 type Props = {
-    patient?: IPatient
+    staff?: IStaff
 };
 
 const genders = [ "Female", "Male" ];
 
-export default function EditPatientForm({ patient } : Props) {
+export default function AddStaffForm({ staff } : Props) {
     const [error, setError] = useState<string | undefined>();
     const navigate = useNavigate();
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const newPatient = {
-            id: patient?.id,
-            room: formData.get("room") as string,
-            diagnosis: formData.get("diagnosis") as string,
+        const newStaff = {
+            id: staff?.id,
             account: {
                 username: formData.get("username") as string,
                 password: formData.get("password") as string,
@@ -32,56 +30,46 @@ export default function EditPatientForm({ patient } : Props) {
             }
         };
         
-        const response = await fetch(`${BACKEND}/api/save-patient`, {
+        const response = await fetch(`${BACKEND}/api/staff/save`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}`
             },
-            body: JSON.stringify(newPatient)
+            body: JSON.stringify(newStaff)
         });
 
         const data = await response.text();
         console.log(response);
         
         if(response.status == 201)
-            navigate(`/patient/${data}`);
+            navigate("/");
         
         else setError(data);
     };
 
     return <form onSubmit={handleSubmit}>
-        <Input type="text" id="username" label="Username" inputValue={patient ? patient.account.username : ""}/>
-        {!patient && <Input type="text" id="password" label="Password" inputValue=""/>}
-        <Input type="text" id="firstname" label="Firstname" inputValue={patient ? patient.account.firstname : ""}/>
-        <Input type="text" id="lastname" label="Lastname" inputValue={patient ? patient.account.lastname : ""}/>
+        <Input type="text" id="username" label="Username" inputValue={staff ? staff.account.username : ""}/>
+        {!staff && <Input type="text" id="password" label="Password" inputValue=""/>}
+        <Input type="text" id="firstname" label="Firstname" inputValue={staff ? staff.account.firstname : ""}/>
+        <Input type="text" id="lastname" label="Lastname" inputValue={staff ? staff.account.lastname : ""}/>
         <div className="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-3">
             <div className="me-lg-4">
                 <label htmlFor="gender" className="form-label">Gender</label>
             </div>
             <div className="col-lg-9">
-                <select id="gender" className="form-select text-secondary" name="gender" defaultValue={patient?.account.gender}>
+                <select id="gender" className="form-select text-secondary" name="gender" defaultValue={staff?.account.gender}>
                     {genders.map(gender => <option key={gender} value={gender}>{gender}</option>)}
                 </select>
             </div>
         </div>
-        <Input type="date" id="date-of-birth" label="Date of birth" inputValue={patient ? patient.account.dateOfBirth : ""}/>
-        <Input type="text" id="address" label="Address" inputValue={patient ? patient.account.address : ""}/>
-        <Input type="text" id="contact" label="Contact" inputValue={patient ? patient.account.contact : ""}/>
-        <Input type="text" id="room" label="Room" inputValue={patient ? patient.room : ""}/>
-        <Input type="text" id="diagnosis" label="Diagnosis" inputValue={patient ? patient.diagnosis : ""}/>
+        <Input type="date" id="date-of-birth" label="Date of birth" inputValue={staff ? staff.account.dateOfBirth : ""}/>
+        <Input type="text" id="address" label="Address" inputValue={staff ? staff.account.address : ""}/>
+        <Input type="text" id="contact" label="Contact" inputValue={staff ? staff.account.contact : ""}/>
         {error && <div className="text-center text-danger py-3">{error}</div>}
         <div className="d-flex flex-column flex-lg-row justify-content-lg-end pt-3">
-            {patient && <NavLink to={`/patient/remove/${patient.id}`} className="btn btn-danger col-12 col-lg-auto rounded-0 me-lg-2">Remove</NavLink>}
+            {staff && <NavLink to={`/staff/remove/${staff.id}`} className="btn btn-danger col-12 col-lg-auto rounded-0 mb-2 mb-lg-0 me-lg-2">Remove</NavLink>}
             <button type="submit" className="btn btn-primary col-12 col-lg-3 rounded-0">Submit</button>
-        </div>
-        <div className="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
-            <div className="d-flex">
-                <div className="toast-body">
-                    Hello, world! This is a toast message.
-                </div>
-                <button type="button" className="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
         </div>
     </form>
 }

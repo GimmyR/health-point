@@ -2,8 +2,11 @@ package mg.healthpoint.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
@@ -13,12 +16,11 @@ import mg.healthpoint.dto.ParameterEntryResponse;
 import mg.healthpoint.dto.ParameterResponse;
 import mg.healthpoint.dto.PatientItemResponse;
 import mg.healthpoint.dto.PatientResponse;
-import mg.healthpoint.dto.SaveAccountRequest;
 import mg.healthpoint.dto.SavePatientRequest;
 import mg.healthpoint.entity.Account;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.Patient;
-import mg.healthpoint.repository.AccountRepository;
+import mg.healthpoint.entity.Role;
 import mg.healthpoint.repository.ParameterRepository;
 import mg.healthpoint.repository.PatientRepository;
 
@@ -29,7 +31,8 @@ public class PatientService {
 	
 	private PatientRepository patientRepository;
 	private ParameterRepository parameterRepository;
-	private AccountRepository accountRepository;
+	private AccountService accountService;
+	private RoleService roleService;
 	
 	public List<Patient> findAllWithAccount() {
 		
@@ -119,6 +122,8 @@ public class PatientService {
 				patient.getRoom(),
 				patient.getDiagnosis(),
 				new AccountResponse(
+						patient.getAccount().getUsername(),
+						patient.getAccount().getPassword(),
 						patient.getAccount().getFirstname(),
 						patient.getAccount().getLastname(),
 						patient.getAccount().getGender(),
@@ -156,6 +161,8 @@ public class PatientService {
 				patient.getRoom(),
 				patient.getDiagnosis(),
 				new AccountResponse(
+						patient.getAccount().getUsername(),
+						patient.getAccount().getPassword(),
 						patient.getAccount().getFirstname(),
 						patient.getAccount().getLastname(),
 						patient.getAccount().getGender(),
@@ -168,7 +175,7 @@ public class PatientService {
 		
 	}
 	
-	public Patient save(SavePatientRequest form) throws NotFoundException {
+	public Patient save(SavePatientRequest form) throws NotFoundException, BadRequestException {
 		
 		Patient patient = null;
 		
@@ -177,7 +184,8 @@ public class PatientService {
 			
 		else {
 			
-			Account account = this.saveAccount(form.account());
+			Role role = this.roleService.findUniqueByName("Patient");
+			Account account = this.accountService.save(form.account(), Arrays.asList(role));
 			patient = new Patient();
 			patient.editAccount(account);
 			patient.editRoom(form.room());
@@ -192,6 +200,7 @@ public class PatientService {
 		Patient patient = this.findUniqueById(form.id());
 		patient.editRoom(form.room());
 		patient.editDiagnosis(form.diagnosis());
+		patient.getAccount().editUsername(form.account().username());
 		patient.getAccount().editFirstname(form.account().firstname());
 		patient.getAccount().editLastname(form.account().lastname());
 		patient.getAccount().editGender(form.account().gender());
@@ -203,24 +212,10 @@ public class PatientService {
 		
 	}
 	
-	private Account saveAccount(SaveAccountRequest form) {
-		
-		Account account = new Account();
-		account.editFirstname(form.firstname());
-		account.editLastname(form.lastname());
-		account.editGender(form.gender());
-		account.editDateOfBirth(form.dateOfBirth());
-		account.editAddress(form.address());
-		account.editContact(form.contact());
-		
-		return this.accountRepository.save(account);
-		
-	}
-	
 	public void delete(Patient patient) {
 		
 		patientRepository.delete(patient);
-		accountRepository.delete(patient.getAccount());
+		accountService.remove(patient.getAccount());
 		
 	}
 

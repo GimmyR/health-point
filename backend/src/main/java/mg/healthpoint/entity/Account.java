@@ -44,7 +44,7 @@ public class Account {
 	
 	private String contact;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable
 	private List<Role> roles = new ArrayList<Role>();
 	
@@ -80,6 +80,11 @@ public class Account {
 
 	public void editContact(String contact) {
 		this.contact = contact;
+	}
+	
+	public void editRoles(List<Role> roles) {
+		this.roles.clear();
+		this.roles.addAll(roles);
 	}
 
 }

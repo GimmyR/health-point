@@ -35,6 +35,17 @@ public class RoleService {
 		
 	}
 	
+	public Role findUniqueByName(String name) throws NotFoundException {
+		
+		Optional<Role> opt = roleRepository.findByName(name);
+		
+		if(opt.isEmpty())
+			throw new NotFoundException("Role not found");
+		
+		return opt.get();
+		
+	}
+	
 	public Role save(Role role) {
 		
 		return roleRepository.save(role);
