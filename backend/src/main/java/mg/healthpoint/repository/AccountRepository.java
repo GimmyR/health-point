@@ -1,6 +1,7 @@
 package mg.healthpoint.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +14,7 @@ import mg.healthpoint.entity.Account;
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 	
 	@Query("select a from Account a left join fetch a.roles where a.username = :username")
-	Account findWithRolesByUsername(@Param("username") String username);
+	Optional<Account> findWithRolesByUsername(@Param("username") String username);
 	
 	@Query("select a from Account a left join fetch a.roles where a.id not in (select s.account.id from Staff s where s.admin = true)")
 	List<Account> findAllWithRolesWithoutAdmin();
