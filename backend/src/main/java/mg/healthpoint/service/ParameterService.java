@@ -3,20 +3,16 @@ package mg.healthpoint.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
-
 import mg.healthpoint.exception.NotFoundException;
 import mg.healthpoint.dto.ParameterResponse;
 import mg.healthpoint.dto.SaveParameterRequest;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.Patient;
 import mg.healthpoint.repository.ParameterRepository;
-import mg.healthpoint.repository.PatientRepository;
-
 
 @Service
 @AllArgsConstructor
@@ -24,7 +20,7 @@ import mg.healthpoint.repository.PatientRepository;
 public class ParameterService {
 	
 	private ParameterRepository parameterRepository;
-	private PatientRepository patientRepository;
+	private PatientService patientService;
 	
 	public List<Parameter> findAll() {
 		
@@ -56,14 +52,10 @@ public class ParameterService {
 	
 	public Parameter save(SaveParameterRequest form) throws NotFoundException, BadRequestException {
 		
-		Optional<Patient> patient = patientRepository.findById(form.patientId());
-		
 		if(form.min() != null && form.max() != null && form.min() > form.max())
 			throw new BadRequestException("Min value should be lower than max value");
 		
-		if(patient.isEmpty())
-			throw new NotFoundException("Patient not found");
-		
+		Patient patient = this.patientService.findUniqueByIdWithoutAccount(form.patientId());
 		Parameter parameter = null;
 		
 		if(form.id() != null)
@@ -75,7 +67,7 @@ public class ParameterService {
 		parameter.editUnit(form.unit());
 		parameter.editMin(form.min());
 		parameter.editMax(form.max());
-		parameter.editPatient(patient.get());
+		parameter.editPatient(patient);
 		
 		return parameterRepository.save(parameter);
 		
@@ -98,6 +90,17 @@ public class ParameterService {
 				new ArrayList<>());
 		
 		return response;
+		
+	}
+	
+	public void mapParametersWithEntries(List<Parameter> parameters) throws NotFoundException {
+		
+		for(Parameter param : parameters) {
+			
+			Parameter parameter = this.findUniqueWithEntriesById(param.getId());
+			param.editDetails(parameter.getDetails());
+			
+		}
 		
 	}
 

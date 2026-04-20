@@ -40,6 +40,9 @@ public class PatientServiceUnitTest {
 	@InjectMocks
 	private PatientService patientService;
 	
+	@InjectMocks
+	private ParameterService parameterService;
+	
 	@Test
 	public void test_findUniqueById() throws NotFoundException {
 		
@@ -73,6 +76,7 @@ public class PatientServiceUnitTest {
 		when(parameterRepository.findWithEntriesById(parameters.getFirst().getId())).thenReturn(Optional.of(parameter2));
 		
 		Patient pat = patientService.findUniqueByUsername(username);
+		parameterService.mapParametersWithEntries(pat.getParameters());
 		assertEquals(entries.getFirst().getValue(), pat.getParameters().getFirst().getDetails().getFirst().getValue());
 		
 	}
