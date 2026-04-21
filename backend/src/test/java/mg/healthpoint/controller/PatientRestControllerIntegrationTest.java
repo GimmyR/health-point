@@ -109,6 +109,14 @@ public class PatientRestControllerIntegrationTest {
 		
 	}
 	
-	// Tester "removePatient"
+	@Test
+	@WithMockUser(username = "ntsoaran", roles = {"Staff"})
+	public void test_removePatient() throws Exception {
+		
+		mockMvc.perform(post("/api/patient/remove/1"))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$", is(true)));
+		
+	}
 
 }
