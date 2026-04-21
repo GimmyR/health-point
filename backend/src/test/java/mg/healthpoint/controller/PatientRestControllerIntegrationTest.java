@@ -87,5 +87,20 @@ public class PatientRestControllerIntegrationTest {
 				.andExpect(jsonPath("$", is(1)));
 		
 	}
+	
+	@Test
+	@WithMockUser(username = "ntsoaran", roles = {"Staff"})
+	public void test_getPatientDetails() throws Exception {
+		
+		mockMvc.perform(get("/api/patient-details/1"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.account.lastname", is("Doe")))
+			.andExpect(jsonPath("$.diagnosis", is("Nephrotic syndrome")));
+		
+	}
+	
+	// Tester "isPatient"
+	
+	// Tester "removePatient"
 
 }
