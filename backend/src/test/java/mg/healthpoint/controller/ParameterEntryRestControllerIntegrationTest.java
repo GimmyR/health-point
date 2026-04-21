@@ -1,6 +1,7 @@
 package mg.healthpoint.controller;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,5 +44,17 @@ public class ParameterEntryRestControllerIntegrationTest {
 				.andExpect(jsonPath("$", is(2)));
 		
 	}
+	
+	@Test
+	@WithMockUser(username = "ntsoaran", roles = {"Staff"})
+	public void test_getParameterEntry() throws Exception {
+		
+		mockMvc.perform(get("/api/entries/1"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.value", is(100.0)));
+		
+	}
+	
+	// tester removeParameterEntry
 
 }
