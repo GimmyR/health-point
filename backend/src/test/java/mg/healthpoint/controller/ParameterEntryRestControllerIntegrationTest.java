@@ -55,6 +55,14 @@ public class ParameterEntryRestControllerIntegrationTest {
 		
 	}
 	
-	// tester removeParameterEntry
+	@Test
+	@WithMockUser(username = "ntsoaran", roles = {"Staff"})
+	public void test_removeParameterEntry() throws Exception {
+		
+		mockMvc.perform(post("/api/entry/remove/1"))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$", is(1)));
+		
+	}
 
 }
