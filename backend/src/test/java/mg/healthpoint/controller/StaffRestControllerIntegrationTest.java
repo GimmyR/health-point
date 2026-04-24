@@ -68,7 +68,15 @@ public class StaffRestControllerIntegrationTest {
 		
 	}
 	
-	// tester findUniqueStaff
+	@Test
+	@WithMockUser(username = "admin", roles = {"Staff"})
+	public void test_findUniqueStaff() throws Exception {
+		
+		mockMvc.perform(get("/api/staffs/1"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.account.username", is("ntsoaran")));
+		
+	}
 	
 	// tester isAdmin
 	
