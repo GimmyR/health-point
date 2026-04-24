@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,6 +22,7 @@ import mg.healthpoint.dto.SaveParameterRequest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 @ActiveProfiles("test")
 public class ParameterRestControllerIntegrationTest {
 	

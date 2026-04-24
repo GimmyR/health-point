@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,6 +18,7 @@ import mg.healthpoint.dto.SignInRequest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 @ActiveProfiles("test")
 public class AccountRestControllerIntegrationTest {
 	
