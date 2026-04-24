@@ -78,7 +78,15 @@ public class StaffRestControllerIntegrationTest {
 		
 	}
 	
-	// tester isAdmin
+	@Test
+	@WithMockUser(username = "admin", roles = {"Staff"})
+	public void test_isAdmin() throws Exception {
+		
+		mockMvc.perform(get("/api/is-admin"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$", is(true)));
+		
+	}
 	
 	// tester removeStaff
 
