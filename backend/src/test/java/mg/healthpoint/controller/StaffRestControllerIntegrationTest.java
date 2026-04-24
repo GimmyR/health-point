@@ -88,6 +88,14 @@ public class StaffRestControllerIntegrationTest {
 		
 	}
 	
-	// tester removeStaff
+	@Test
+	@WithMockUser(username = "admin", roles = {"Staff"})
+	public void test_removeStaff() throws Exception {
+		
+		mockMvc.perform(post("/api/staff/remove/1"))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$", is(true)));
+		
+	}
 
 }
