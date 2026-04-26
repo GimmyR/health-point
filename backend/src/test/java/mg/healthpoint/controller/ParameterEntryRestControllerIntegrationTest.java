@@ -1,6 +1,7 @@
 package mg.healthpoint.controller;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +25,7 @@ import mg.healthpoint.dto.SaveEntryRequest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 @ActiveProfiles("test")
 public class ParameterEntryRestControllerIntegrationTest {
 	
@@ -41,6 +44,26 @@ public class ParameterEntryRestControllerIntegrationTest {
 				.content(objectMapper.writeValueAsBytes(new SaveEntryRequest(null, 1, LocalDateTime.now(), 37.5))))
 				.andExpect(status().isCreated())
 				.andExpect(jsonPath("$", is(2)));
+		
+	}
+	
+	@Test
+	@WithMockUser(username = "ntsoaran", roles = {"Staff"})
+	public void test_getParameterEntry() throws Exception {
+		
+		mockMvc.perform(get("/api/entries/1"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.value", is(100.0)));
+		
+	}
+	
+	@Test
+	@WithMockUser(username = "ntsoaran", roles = {"Staff"})
+	public void test_removeParameterEntry() throws Exception {
+		
+		mockMvc.perform(post("/api/entry/remove/1"))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$", is(1)));
 		
 	}
 

@@ -1,5 +1,7 @@
 package mg.healthpoint.service;
 
+import java.util.Optional;
+
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,10 +20,12 @@ public class UserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Account account = accountRepository.findWithRolesByUsername(username);
+		Optional<Account> opt = accountRepository.findWithRolesByUsername(username);
 		
-		if(account == null)
+		if(opt.isEmpty())
 			throw new UsernameNotFoundException(String.format("%s not found", username));
+		
+		Account account = opt.get();
 		
 		UserDetails user = User.withUsername(account.getUsername())
 								.password(account.getPassword())

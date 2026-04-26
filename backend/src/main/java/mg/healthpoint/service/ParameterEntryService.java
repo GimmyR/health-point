@@ -3,20 +3,16 @@ package mg.healthpoint.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
-
 import mg.healthpoint.exception.NotFoundException;
 import mg.healthpoint.dto.ParameterEntryResponse;
 import mg.healthpoint.dto.SaveEntryRequest;
 import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.ParameterEntry;
 import mg.healthpoint.repository.ParameterEntryRepository;
-import mg.healthpoint.repository.ParameterRepository;
-
 
 @Service
 @AllArgsConstructor
@@ -24,7 +20,7 @@ import mg.healthpoint.repository.ParameterRepository;
 public class ParameterEntryService {
 	
 	private ParameterEntryRepository parameterEntryRepository;
-	private ParameterRepository parameterRepository;
+	private ParameterService parameterService;
 	
 	public List<ParameterEntry> findAll() {
 		
@@ -51,12 +47,7 @@ public class ParameterEntryService {
 	
 	public ParameterEntry save(SaveEntryRequest form) throws NotFoundException, BadRequestException {
 		
-		Optional<Parameter> opt = this.parameterRepository.findById(form.parameterId());
-		
-		if(opt.isEmpty())
-			throw new NotFoundException("Parameter not found");
-		
-		Parameter param = opt.get();
+		Parameter param = this.parameterService.findUniqueById(form.parameterId());
 		ParameterEntry entry = null;
 		
 		if((param.getMin() == null || form.value() < param.getMin()) || (param.getMax() == null || form.value() > param.getMax()))

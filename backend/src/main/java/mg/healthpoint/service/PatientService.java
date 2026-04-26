@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +17,8 @@ import mg.healthpoint.dto.PatientItemResponse;
 import mg.healthpoint.dto.PatientResponse;
 import mg.healthpoint.dto.SavePatientRequest;
 import mg.healthpoint.entity.Account;
-import mg.healthpoint.entity.Parameter;
 import mg.healthpoint.entity.Patient;
 import mg.healthpoint.entity.Role;
-import mg.healthpoint.repository.ParameterRepository;
 import mg.healthpoint.repository.PatientRepository;
 
 @Service
@@ -30,13 +27,23 @@ import mg.healthpoint.repository.PatientRepository;
 public class PatientService {
 	
 	private PatientRepository patientRepository;
-	private ParameterRepository parameterRepository;
 	private AccountService accountService;
 	private RoleService roleService;
 	
 	public List<Patient> findAllWithAccount() {
 		
 		return patientRepository.findAllWithAccount();
+		
+	}
+	
+	public Patient findUniqueByIdWithoutAccount(Integer id) throws NotFoundException {
+		
+		Optional<Patient> opt = patientRepository.findById(id);
+		
+		if(opt.isPresent())
+			return opt.get();
+		
+		else throw new NotFoundException("Patient not found");
 		
 	}
 	
@@ -58,41 +65,7 @@ public class PatientService {
 		if(opt.isEmpty())
 			throw new NotFoundException("Patient not found");
 		
-		Patient result = opt.get();
-		
-		result.getParameters().forEach(param -> { 
-			this.mapParametersWithEntries(param); 
-		});
-		
-		return result;
-		
-	}
-	
-	private void mapParametersWithEntries(Parameter param) {
-		
-		Optional<Parameter> optParam = parameterRepository.findWithEntriesById(param.getId());
-		
-		if(optParam.isEmpty())
-			System.out.println(String.format("Parameter (ID: %d) not found", param.getId()));
-		
-		else param.editDetails(optParam.get().getDetails());
-		
-	}
-	
-	public Patient findUniqueWithParametersById(Integer id) throws NotFoundException {
-		
-		Optional<Patient> opt = patientRepository.findWithParametersById(id);
-		
-		if(opt.isEmpty())
-			throw new NotFoundException("Patient not found");
-		
-		Patient result = opt.get();
-		
-		result.getParameters().forEach(param -> { 
-			this.mapParametersWithEntries(param); 
-		});
-		
-		return result;
+		return opt.get();
 		
 	}
 	

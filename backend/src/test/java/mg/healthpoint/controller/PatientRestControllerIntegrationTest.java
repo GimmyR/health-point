@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,6 +25,7 @@ import mg.healthpoint.dto.SavePatientRequest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 @ActiveProfiles("test")
 public class PatientRestControllerIntegrationTest {
 	
@@ -85,6 +87,37 @@ public class PatientRestControllerIntegrationTest {
 								"033 62 667 74 / johndoe@example.com")))))
 				.andExpect(status().isCreated())
 				.andExpect(jsonPath("$", is(1)));
+		
+	}
+	
+	@Test
+	@WithMockUser(username = "ntsoaran", roles = {"Staff"})
+	public void test_getPatientDetails() throws Exception {
+		
+		mockMvc.perform(get("/api/patient-details/1"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.account.lastname", is("Doe")))
+			.andExpect(jsonPath("$.diagnosis", is("Nephrotic syndrome")));
+		
+	}
+	
+	@Test
+	@WithMockUser(username = "ntsoaran", roles = {"Staff"})
+	public void test_isPatient() throws Exception {
+		
+		mockMvc.perform(get("/api/is-patient"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$", is(false)));
+		
+	}
+	
+	@Test
+	@WithMockUser(username = "ntsoaran", roles = {"Staff"})
+	public void test_removePatient() throws Exception {
+		
+		mockMvc.perform(post("/api/patient/remove/1"))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$", is(true)));
 		
 	}
 

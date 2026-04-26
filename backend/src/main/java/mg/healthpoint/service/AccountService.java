@@ -2,6 +2,7 @@ package mg.healthpoint.service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.coyote.BadRequestException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,7 @@ import mg.healthpoint.dto.SaveAccountRequest;
 import mg.healthpoint.dto.SignInRequest;
 import mg.healthpoint.entity.Account;
 import mg.healthpoint.entity.Role;
+import mg.healthpoint.exception.NotFoundException;
 import mg.healthpoint.repository.AccountRepository;
 
 @Service
@@ -37,9 +39,9 @@ public class AccountService {
 		
 	}
 	
-	public String generateJWT(String username) {
+	public String generateJWT(String username) throws NotFoundException {
 		
-		Account account = accountRepository.findWithRolesByUsername(username);
+		Account account = this.findByUsernameWithRoles(username);
 		
 		JwtClaimsSet payload = JwtClaimsSet.builder()
 				.issuedAt(Instant.now())
@@ -81,6 +83,17 @@ public class AccountService {
 			account.editRoles(roles);
 		
 		return this.accountRepository.save(account);
+		
+	}
+	
+	public Account findByUsernameWithRoles(String username) throws NotFoundException {
+		
+		Optional<Account> opt = this.accountRepository.findWithRolesByUsername(username);
+		
+		if(opt.isEmpty())
+			throw new NotFoundException("Account not found");
+		
+		return opt.get();
 		
 	}
 	

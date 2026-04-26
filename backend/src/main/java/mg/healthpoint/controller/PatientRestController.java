@@ -20,6 +20,7 @@ import mg.healthpoint.dto.SavePatientRequest;
 import mg.healthpoint.entity.Patient;
 import mg.healthpoint.exception.NotFoundException;
 import mg.healthpoint.service.ParameterEntryService;
+import mg.healthpoint.service.ParameterService;
 import mg.healthpoint.service.PatientService;
 
 @RestController
@@ -27,12 +28,14 @@ import mg.healthpoint.service.PatientService;
 public class PatientRestController {
 	
 	private PatientService patientService;
+	private ParameterService parameterService;
 	private ParameterEntryService parameterEntryService;
 	
 	@GetMapping("/api/patient")
 	public ResponseEntity<PatientResponse> getPatient(Authentication auth) throws NotFoundException {
 		
 		Patient patient = patientService.findUniqueByUsername(auth.getName());
+		parameterService.mapParametersWithEntries(patient.getParameters());
 		List<LocalDateTime> entryDates = parameterEntryService.findDistinctEntryDatesByPatientId(patient.getId());
 		PatientResponse response = patientService.mapToPatientResponse(patient, entryDates);
 		return ResponseEntity.ok(response);
@@ -51,7 +54,8 @@ public class PatientRestController {
 	@GetMapping("/api/patients/{id}")
 	public ResponseEntity<PatientResponse> getPatient(@PathVariable Integer id) throws NotFoundException {
 		
-		Patient patient = patientService.findUniqueWithParametersById(id);
+		Patient patient = patientService.findUniqueById(id);
+		parameterService.mapParametersWithEntries(patient.getParameters());
 		List<LocalDateTime> entryDates = parameterEntryService.findDistinctEntryDatesByPatientId(patient.getId());
 		PatientResponse response = patientService.mapToPatientResponse(patient, entryDates);
 		return ResponseEntity.ok(response);
