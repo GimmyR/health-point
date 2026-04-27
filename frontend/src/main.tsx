@@ -36,7 +36,7 @@ const router = createBrowserRouter([
                 element: <PatientForStaff/>
             },
             {
-                path: "edit-info/:id",
+                path: "patient/edit/:id",
                 element: <EditInfo/>
             },
             {
