@@ -68,7 +68,7 @@ export default function AddStaffForm({ staff } : Props) {
         <Input type="text" id="contact" label="Contact" inputValue={staff ? staff.account.contact : ""}/>
         {error && <div className="text-center text-danger py-3">{error}</div>}
         <div className="d-flex flex-column flex-lg-row justify-content-lg-between pt-3">
-            {staff && <NavLink to={`/staff/password/edit/${staff.id}`} className="btn btn-warning col-12 col-lg-auto rounded-0 mb-2 mb-lg-0">Edit password</NavLink>}
+            {staff && <NavLink to={`/account/password/edit/${staff.account.id}`} className="btn btn-warning col-12 col-lg-auto rounded-0 mb-2 mb-lg-0">Edit password</NavLink>}
             <button type="submit" className="btn btn-primary col-12 col-lg-3 rounded-0">Submit</button>
         </div>
     </form>

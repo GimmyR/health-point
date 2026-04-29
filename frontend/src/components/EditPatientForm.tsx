@@ -72,7 +72,7 @@ export default function EditPatientForm({ patient } : Props) {
         <Input type="text" id="diagnosis" label="Diagnosis" inputValue={patient ? patient.diagnosis : ""}/>
         {error && <div className="text-center text-danger py-3">{error}</div>}
         <div className="d-flex flex-column flex-lg-row justify-content-lg-between pt-3">
-            {patient && <NavLink to={`/patient/password/edit/${patient.id}`} className="btn btn-warning col-12 col-lg-auto rounded-0">Edit password</NavLink>}
+            {patient && <NavLink to={`/account/password/edit/${patient.account.id}`} className="btn btn-warning col-12 col-lg-auto rounded-0">Edit password</NavLink>}
             <button type="submit" className="btn btn-primary col-12 col-lg-3 rounded-0">Submit</button>
         </div>
         <div className="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
