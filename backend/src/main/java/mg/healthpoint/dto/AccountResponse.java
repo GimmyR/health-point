@@ -3,6 +3,7 @@ package mg.healthpoint.dto;
 import java.time.LocalDate;
 
 public record AccountResponse(
+	Integer id,
 	String username,
 	String password,
 	String firstname,
