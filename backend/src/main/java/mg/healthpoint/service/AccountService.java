@@ -8,6 +8,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
+import mg.healthpoint.dto.EditPasswordRequest;
 import mg.healthpoint.dto.SaveAccountRequest;
 import mg.healthpoint.dto.SignInRequest;
 import mg.healthpoint.entity.Account;
@@ -31,6 +33,7 @@ public class AccountService {
 	private JwtEncoder jwtEncoder;
 	private AuthenticationManager authenticationManager;
 	private AccountRepository accountRepository;
+	private PasswordEncoder passwordEncoder;
 	
 	public void authenticate(SignInRequest form) {
 		
@@ -100,6 +103,31 @@ public class AccountService {
 	public List<Account> findAllWithRolesWithoutAdmin() {
 		
 		return this.accountRepository.findAllWithRolesWithoutAdmin();
+		
+	}
+	
+	public Account findById(Integer id) throws NotFoundException {
+		
+		Optional<Account> opt = this.accountRepository.findById(id);
+		
+		if(opt.isEmpty())
+			throw new NotFoundException("Account not found");
+		
+		return opt.get();
+		
+	}
+	
+	public Boolean editPassword(Integer accountId, EditPasswordRequest form) throws NotFoundException {
+		
+		Account account = this.findById(accountId);
+		Boolean matched = passwordEncoder.matches(form.oldPassword(), account.getPassword());
+		
+		if(matched) {
+			
+			account.editPassword(passwordEncoder.encode(form.newPassword()));
+			this.accountRepository.save(account);
+			
+		} return matched;
 		
 	}
 

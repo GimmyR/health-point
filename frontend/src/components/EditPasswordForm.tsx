@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import EditPasswordInput from "./EditPasswordInput";
 import useRole from "../hooks/useRole";
 import { useNavigate } from "react-router-dom";
+import { BACKEND } from "../lib/url";
 
 type Props = {
     accountId: number
@@ -12,7 +13,7 @@ export default function EditPasswordForm({ accountId } : Props) {
     const navigate = useNavigate();
     const [error, setError] = useState<string | undefined>();
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         setError(undefined);
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -21,6 +22,20 @@ export default function EditPasswordForm({ accountId } : Props) {
             setError("New password and confirm new password don't have the same value");
 
         else {
+
+            const res = await fetch(`${BACKEND}/api/accounts/edit-password/${accountId}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("jwtoken")}`
+                },
+                body: JSON.stringify({ oldPassword: formData.get("old-password"), newPassword: formData.get("new-password") })
+            });
+
+            if(res.ok)
+                navigate("/");
+
+            else throw new Error(res.statusText);
 
         }
     };
