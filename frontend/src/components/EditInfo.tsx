@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { BACKEND } from "../lib/url";
 import type IPatient from "../interfaces/IPatient";
 import EditPatientForm from "./EditPatientForm";
@@ -11,7 +11,7 @@ export default function EditInfo() {
     const navigate = useNavigate();
     const [patient, setPatient] = useState<IPatient | undefined>();
 
-    if(!isStaff)
+    if(isStaff != undefined && !isStaff)
         navigate("/");
 
     useEffect(() => {
@@ -23,7 +23,12 @@ export default function EditInfo() {
     return <main className="container-fluid container-lg min-vh-100 px-4 pt-5 bg-light">
         {patient && <div className="pt-5 pb-3">
             <div className="d-flex flex-column align-items-center">
-                <h1 className="fs-3 text-decoration-underline">Edit patient</h1>
+                <div className="d-flex flex-row align-items-center">
+                    <h1 className="fs-3 text-decoration-underline">Edit patient</h1>
+                    {patient && <NavLink to={`/patient/remove/${patient.id}`} className="text-decoration-none ms-3">
+                        <i className="bi bi-trash fs-5 text-danger"></i>
+                    </NavLink>}
+                </div>
                 <div className="col-12 col-lg-5 mt-3 mt-lg-4">
                     <EditPatientForm patient={patient}/>
                 </div>

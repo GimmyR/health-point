@@ -18,7 +18,7 @@ export default function PatientInfo({ isStaff, id, room, diagnosis } : Props) {
             </li>
         </ul>
         {isStaff && id && <div className="d-flex flex-row justify-content-lg-end mb-3 mb-lg-0">
-            <NavLink to={`/edit-info/${id}`} className="btn btn-primary py-1">
+            <NavLink to={`/patient/edit/${id}`} className="btn btn-primary py-1">
                 <i className="bi bi-pencil-fill me-2"></i>Edit
             </NavLink>
         </div>}
