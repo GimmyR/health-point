@@ -7,10 +7,10 @@ export default function PatientForStaff() {
     const { isStaff } = useRole();
     const navigate = useNavigate();
 
-    if(!isStaff)
+    if(isStaff != undefined && !isStaff)
         navigate("/");
 
-    if(isStaff && id != undefined)
+    if(isStaff != undefined && isStaff && id != undefined)
         return <Patient isStaff={isStaff} id={parseInt(id)}/>
 
     else return null;

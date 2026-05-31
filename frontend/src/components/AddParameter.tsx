@@ -7,7 +7,7 @@ export default function AddParameter() {
     const { isStaff } = useRole();
     const navigate = useNavigate();
 
-    if(!isStaff)
+    if(isStaff != undefined && !isStaff)
         navigate("/");
 
     if(patientId)

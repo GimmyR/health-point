@@ -7,12 +7,12 @@ export default function RemoveParameter() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    if(!isStaff)
+    if(isStaff != undefined && !isStaff)
         navigate("/");
 
     const removeParameter = async () => {
         const res = await fetch(`${BACKEND}/api/parameter/remove/${id}`, {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}`
             }

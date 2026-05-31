@@ -4,15 +4,15 @@ import useRole from "../hooks/useRole";
 
 export default function RemoveStaff() {
     const { id } = useParams();
-    const { isPatient, isStaff, isAdmin } = useRole();
+    const { isAdmin } = useRole();
     const navigate = useNavigate();
 
-    if(isPatient != undefined && isStaff != undefined && isAdmin != undefined && !isAdmin)
+    if(isAdmin != undefined && !isAdmin)
         navigate("/");
 
     const removeStaff = async () => {
         const res = await fetch(`${BACKEND}/api/staff/remove/${id}`, {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}`
             }

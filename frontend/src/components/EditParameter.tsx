@@ -13,7 +13,7 @@ export default function EditParameter() {
     const [parameter, setParameter] = useState<Parameter>();
     const navigate = useNavigate();
 
-    if(!isStaff)
+    if(isStaff != undefined && !isStaff)
         navigate("/");
 
     useEffect(() => {

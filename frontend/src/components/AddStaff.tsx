@@ -3,10 +3,10 @@ import useRole from "../hooks/useRole";
 import AddStaffForm from "./AddStaffForm";
 
 export default function AddStaff() {
-    const { isPatient, isStaff, isAdmin } = useRole();
+    const { isAdmin } = useRole();
     const navigate = useNavigate();
 
-    if(isPatient != undefined && isStaff != undefined && isAdmin != undefined && !isAdmin)
+    if(isAdmin != undefined && !isAdmin)
         navigate("/");
 
     return <main className="container-fluid container-lg min-vh-100 px-4 pt-5 bg-light">

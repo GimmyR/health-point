@@ -7,12 +7,12 @@ export default function RemovePatient() {
     const { isStaff } = useRole();
     const navigate = useNavigate();
 
-    if(!isStaff)
+    if(isStaff != undefined && !isStaff)
         navigate("/");
 
     const removePatient = async () => {
         const res = await fetch(`${BACKEND}/api/patient/remove/${id}`, {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}`
             }
