@@ -1,6 +1,7 @@
 package mg.healthpoint.controller;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -58,7 +59,7 @@ public class ParameterRestControllerIntegrationTest {
 	@WithMockUser(username = "ntsoran", roles = {"Staff"})
 	public void test_removeParameter() throws Exception {
 		
-		mockMvc.perform(post("/api/parameter/remove/1"))
+		mockMvc.perform(delete("/api/parameter/remove/1"))
 			.andExpect(status().isCreated())
 			.andExpect(jsonPath("$", is(1)));
 		

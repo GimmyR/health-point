@@ -12,7 +12,7 @@ export default function RemoveParameter() {
 
     const removeParameter = async () => {
         const res = await fetch(`${BACKEND}/api/parameter/remove/${id}`, {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}`
             }
