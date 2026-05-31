@@ -11,6 +11,10 @@ It is built with:
 - **PostgreSQL** for data persistence  
 - **Docker** for containerized deployment
 
+![Front-End](./screenshots/front-end.png)
+
+![API](./screenshots/api.png)
+
 ## Prerequisites
 
 Before building or running the application, make sure you have the following installed :
