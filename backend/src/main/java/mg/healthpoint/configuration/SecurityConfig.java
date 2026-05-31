@@ -66,7 +66,8 @@ public class SecurityConfig {
     																"/api/entry/**",
     																"/api/staff/**",
     																"/api/staffs/**",
-    																"/api/is-admin").hasRole("Staff")
+    																"/api/is-admin",
+    																"/api/accounts/edit-password/**").hasRole("Staff")
     														.anyRequest().authenticated()
     			).userDetailsService(userService)
 				.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
@@ -134,6 +135,9 @@ public class SecurityConfig {
 		corsConfiguration.addAllowedOrigin(frontendURL);
 		corsConfiguration.addAllowedMethod("GET");
 		corsConfiguration.addAllowedMethod("POST");
+		corsConfiguration.addAllowedMethod("PUT");
+		corsConfiguration.addAllowedMethod("PATCH");
+		corsConfiguration.addAllowedMethod("DELETE");
 		corsConfiguration.addAllowedHeader("Content-Type");
 		corsConfiguration.addAllowedHeader("Authorization");
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
