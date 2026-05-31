@@ -7,7 +7,7 @@ export default function RemovePatient() {
     const { isStaff } = useRole();
     const navigate = useNavigate();
 
-    if(!isStaff)
+    if(isStaff != undefined && !isStaff)
         navigate("/");
 
     const removePatient = async () => {

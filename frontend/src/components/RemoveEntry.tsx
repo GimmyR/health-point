@@ -7,7 +7,7 @@ export default function RemoveEntry() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    if(!isStaff)
+    if(isStaff != undefined && !isStaff)
         navigate("/");
 
     const removeEntry = async () => {

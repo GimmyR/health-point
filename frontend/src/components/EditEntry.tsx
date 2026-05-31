@@ -12,7 +12,7 @@ export default function EditEntry() {
     const navigate = useNavigate();
     const [entry, setEntry] = useState<ParameterEntry | undefined>();
 
-    if(!isStaff)
+    if(isStaff != undefined && !isStaff)
         navigate("/");
 
     useEffect(() => {

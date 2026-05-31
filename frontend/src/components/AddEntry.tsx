@@ -10,7 +10,7 @@ export default function AddEntry() {
     const parameterId = parseInt(searchParams.get("parameter") as string);
     const navigate = useNavigate();
 
-    if(!isStaff)
+    if(isStaff != undefined && !isStaff)
         navigate("/");
 
     if(patientId)

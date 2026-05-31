@@ -4,10 +4,10 @@ import useRole from "../hooks/useRole";
 
 export default function RemoveStaff() {
     const { id } = useParams();
-    const { isPatient, isStaff, isAdmin } = useRole();
+    const { isAdmin } = useRole();
     const navigate = useNavigate();
 
-    if(isPatient != undefined && isStaff != undefined && isAdmin != undefined && !isAdmin)
+    if(isAdmin != undefined && !isAdmin)
         navigate("/");
 
     const removeStaff = async () => {

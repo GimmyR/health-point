@@ -6,7 +6,7 @@ export default function AddPatient() {
     const { isStaff } = useRole();
     const navigate = useNavigate();
 
-    if(!isStaff)
+    if(isStaff != undefined && !isStaff)
         navigate("/");
 
     return <main className="container-fluid container-lg min-vh-100 px-4 pt-5 bg-light">
