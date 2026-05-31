@@ -3,6 +3,7 @@ package mg.healthpoint.controller;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +40,7 @@ public class ParameterEntryRestController {
 		
 	}
 	
-	@PostMapping("/api/entry/remove/{id}")
+	@DeleteMapping("/api/entry/remove/{id}")
 	public ResponseEntity<Integer> removeParameterEntry(@PathVariable Integer id) throws NotFoundException {
 		
 		ParameterEntry entry = this.parameterEntryService.findUniqueById(id);

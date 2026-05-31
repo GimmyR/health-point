@@ -12,7 +12,7 @@ export default function RemoveEntry() {
 
     const removeEntry = async () => {
         const res = await fetch(`${BACKEND}/api/entry/remove/${id}`, {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}`
             }
