@@ -12,7 +12,7 @@ export default function RemovePatient() {
 
     const removePatient = async () => {
         const res = await fetch(`${BACKEND}/api/patient/remove/${id}`, {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("jwtoken")}`
             }
