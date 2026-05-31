@@ -1,6 +1,7 @@
 package mg.healthpoint.controller;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -95,7 +96,7 @@ public class StaffRestControllerIntegrationTest {
 	@WithMockUser(username = "admin", roles = {"Staff"})
 	public void test_removeStaff() throws Exception {
 		
-		mockMvc.perform(post("/api/staff/remove/1"))
+		mockMvc.perform(delete("/api/staff/remove/1"))
 			.andExpect(status().isCreated())
 			.andExpect(jsonPath("$", is(true)));
 		
