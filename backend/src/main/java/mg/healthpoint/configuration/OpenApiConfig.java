@@ -15,7 +15,7 @@ public class OpenApiConfig {
 	@Bean
 	public OpenAPI openApi() {
 		
-		Info info = new Info().title("Documentation for Bread on Board API");
+		Info info = new Info().title("Documentation for Health Point API");
 		
 		return new OpenAPI()
 					.info(info)
